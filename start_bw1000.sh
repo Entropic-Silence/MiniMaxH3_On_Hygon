@@ -6,6 +6,7 @@ ARCHIVE="$BASE/source/h3_bw1000_source.tar.gz"
 echo "cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512  $ARCHIVE" | sha256sum -c -
 ROOT=${H3_ROOT:-"$BASE/runtime/h3-extreme"}
 if [[ ! -d "$ROOT" ]]; then
+  if [[ -n "${H3_ROOT:-}" ]]; then echo "H3_ROOT directory does not exist: $ROOT" >&2; exit 2; fi
   mkdir -p "$BASE/runtime"
   tar -xzf "$ARCHIVE" -C "$BASE/runtime"
 fi
