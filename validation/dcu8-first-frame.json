@@ -1,0 +1,76 @@
+{
+  "complete": true,
+  "input_sha256": "c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427",
+  "input_size": [
+    627,
+    756
+  ],
+  "prompt": "A dog falls asleep",
+  "steps": 50,
+  "frames": 124,
+  "seed": 42,
+  "output_size": [
+    768,
+    768
+  ],
+  "devices": 8,
+  "hardware": "BW1000 gfx936",
+  "official_compare_excerpt": "[result] MiniMax-H3 video comparison\n\n  FL2VA\n    Size:         PASS (PyTorch 768x768, InfiniLM 768x768)\n    Length:       PASS (PyTorch 124 frames, InfiniLM 124 frames)\n    Average SSIM: 98.996%",
+  "ssim_percent": 98.996,
+  "native_pipeline_seconds": 110.697,
+  "reference_pipeline_seconds": 441.477,
+  "records": {
+    "native": {
+      "input_sha256": "c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427",
+      "source_sha256": "cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512",
+      "output_sha256": "9301bd603d53071d608cb2f481286900420a729623381443572d1d625838c8e4",
+      "exit_code": 0,
+      "timings_seconds": {
+        "model.pipeline_create": 0.417,
+        "model.condition_encoder_create_and_load": 102.826,
+        "model.transformer_create_and_load": 0.041,
+        "model.remaining_components_create_and_load": 165.734,
+        "model.warmup": 194.972,
+        "input.files_and_references": 0.022,
+        "input.arguments": 0.0,
+        "compute.condition_encoder": 6.145,
+        "input.video_vae_encode": 3.673,
+        "input.audio_vae_encode": 0.0,
+        "compute.h3_transformer": 79.554,
+        "output.video_vae_decode": 13.623,
+        "output.audio_vae_decode": 0.191,
+        "generation.pipeline_total": 110.697,
+        "output.media_encode": 2.81,
+        "total.end_to_end": 577.959,
+        "pipeline.other_preprocess_scheduler": 7.511
+      }
+    },
+    "reference": {
+      "input_sha256": "c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427",
+      "source_sha256": "cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512",
+      "output_sha256": "d3efefd94cbea98b6c32cf86650144dd07800060782c5fe740416414270f694a",
+      "exit_code": 0,
+      "timings_seconds": {
+        "model.pipeline_create": 0.418,
+        "model.condition_encoder_create_and_load": 101.617,
+        "model.transformer_create_and_load": 75.486,
+        "model.remaining_components_create_and_load": 18.973,
+        "model.warmup": 0.0,
+        "input.files_and_references": 0.024,
+        "input.arguments": 0.0,
+        "compute.condition_encoder": 11.853,
+        "input.video_vae_encode": 0.509,
+        "input.audio_vae_encode": 0.0,
+        "compute.h3_transformer": 406.55,
+        "output.video_vae_decode": 17.04,
+        "output.audio_vae_decode": 1.543,
+        "generation.pipeline_total": 441.477,
+        "output.media_encode": 1.826,
+        "total.end_to_end": 639.842,
+        "pipeline.other_preprocess_scheduler": 3.982
+      }
+    }
+  },
+  "measurement_scope": "One generation per backend using ordinary entry-point component timers. Pipeline excludes model construction, warmup and final media encoding. Timings are not a hardware-peak claim. Shared validation data for both release branches.",
+  "evidence_archive_sha256": "97aa2e9f1ebdfff1e988eb9c9365885ecd828e723ebf6b6f08789f5fa28ef7fb"
+}

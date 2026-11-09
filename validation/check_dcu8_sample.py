@@ -1,3 +1,6 @@
+"""Platform validation harness; requires an existing IFAB_AFS_HOME/h3 environment.
+For standalone deployment use the repository root shell entry.
+"""
 import argparse,base64,hashlib,json,os,re,shutil,subprocess,tarfile,tempfile,time,urllib.request,zlib
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('mode',choices=['reference','native']);a=p.parse_args()
@@ -6,9 +9,10 @@ assert not d.exists();d.mkdir(parents=True)
 sha=lambda b:hashlib.sha256(b).hexdigest()
 seal=json.loads((r/'diagnostics/attention-identity-default-seal-v1.json').read_text());before=(r/'env-owned.sh').read_bytes();assert sha(before)==seal['default_env_sha256'] and seal['adopted']
 url='https://raw.githubusercontent.com/Entropic-Silence/MiniMaxH3_On_Hygon/a1ecbf8c5a5304717d1fd56d3633ff0e0c31407b/assets/first_frame.png'
-b=urllib.request.urlopen(url,timeout=60).read();assert sha(b)=='c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427'
+local_image=Path(__file__).resolve().parents[1]/'assets/first_frame.png'
+b=local_image.read_bytes() if local_image.is_file() else urllib.request.urlopen(url,timeout=60).read();assert sha(b)=='c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427'
 image=d/'input.png';image.write_bytes(b)
-record={'mode':a.mode,'input_sha256':sha(b),'source_sha256':seal['source_sha256'],'prompt':'A dog falls asleep','steps':50,'frames':124,'seed':42,'width':768,'height':768,'gpus':list(range(8)),'environment_before_sha256':sha(before),'performance_scope':'Unprofiled complete generation; generation.pipeline_total excludes startup and model construction.'}
+record={'mode':a.mode,'input_sha256':sha(b),'source_sha256':seal['source_sha256'],'prompt':'A dog falls asleep','steps':50,'frames':124,'seed':42,'width':768,'height':768,'gpus':list(range(8)),'environment_before_sha256':sha(before),'performance_scope':'Ordinary generation entry with built-in component timers; pipeline excludes model construction, warmup and final media encoding.'}
 (d/'inputs.json').write_text(json.dumps(record,indent=2)+'\n')
 code=1;started=time.time()
 try:

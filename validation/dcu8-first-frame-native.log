@@ -1,0 +1,412 @@
+flash_attn is installed but failed to import: cannot import name '_wrapped_flash_attn_backward' from 'flash_attn.flash_attn_interface' ($H3_DATA/pylib/flash_attn/flash_attn_interface.py). Falling back to native PyTorch attention.
+[model] Loading modular components from: /public/home/aclsylqidf/shared/MiniMax-H3/diffusers
+[model] Loading fl2va weights from:       /public/home/aclsylqidf/shared/MiniMax-H3/diffusers
+[model] Backend: InfiniLM
+[model] InfiniLM TP devices: [0, 1, 2, 3, 4, 5, 6, 7]
+[h3.conditioner] Qwen RMS: reference (gfx936 default)
+$H3_DATA/attention-identity-default-v1/python/infinilm/multimodal/_h3_residency.py:261: UserWarning: sdpa adopt the new interface of flash-attn (Triggered internally at /home/pytorch/aten/src/ATen/native/transformers/hip/cutlassfa_adapter.h:145.)
+  F.scaled_dot_product_attention(q, k, v, is_causal=causal, enable_gqa=kv_heads != heads)
+[2026-11-09 01:46:05.301] [info] Intra-node TP communicator established: node_rank=0, local_ranks=8
+[h3.residency] {"event": "host_cache", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder", "bytes": 66714780128, "seconds": 81.24826251808554}
+ load weights ......
+Found index file: /public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder/model.safetensors.index.json. Loading shards by index.
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s]
+                                                        
+Processing: model-00006-of-00014.safetensors
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s]
+Processing files:   7%|鈻�         | 1/14 [00:00<00:02,  5.68it/s]
+                                                                
+Processing: model-00012-of-00014.safetensors
+
+Processing files:   7%|鈻�         | 1/14 [00:00<00:02,  5.68it/s]
+                                                                
+Processing: model-00008-of-00014.safetensors
+
+Processing files:   7%|鈻�         | 1/14 [00:00<00:02,  5.68it/s]
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:00<00:01, 10.34it/s]
+                                                                
+Processing: model-00002-of-00014.safetensors
+
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:00<00:01, 10.34it/s]
+                                                                
+Processing: model-00005-of-00014.safetensors
+
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:00<00:01, 10.34it/s]
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:00<00:01,  4.77it/s]
+                                                                
+Processing: model-00014-of-00014.safetensors
+
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:00<00:01,  4.77it/s]
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:01<00:02,  3.33it/s]
+                                                                
+Processing: model-00007-of-00014.safetensors
+
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:01<00:02,  3.33it/s]
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:05<00:08,  1.23s/it]
+                                                                
+Processing: model-00011-of-00014.safetensors
+
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:05<00:08,  1.23s/it]
+Processing files:  57%|鈻堚枅鈻堚枅鈻堚枊    | 8/14 [00:06<00:06,  1.14s/it]
+                                                                
+Processing: model-00009-of-00014.safetensors
+
+Processing files:  57%|鈻堚枅鈻堚枅鈻堚枊    | 8/14 [00:06<00:06,  1.14s/it]
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:07<00:06,  1.36s/it]
+                                                                
+Processing: model-00003-of-00014.safetensors
+
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:07<00:06,  1.36s/it]
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:13<00:09,  2.49s/it]
+                                                                 
+Processing: model-00010-of-00014.safetensors
+
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:13<00:09,  2.49s/it]
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:16<00:07,  2.60s/it]
+                                                                 
+Processing: model-00001-of-00014.safetensors
+
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:16<00:07,  2.60s/it]
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:17<00:04,  2.32s/it]
+                                                                 
+Processing: model-00013-of-00014.safetensors
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:17<00:04,  2.32s/it]
+                                                                 
+Processing: model-00004-of-00014.safetensors
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:17<00:04,  2.32s/it]
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:20<00:00,  1.84s/it]
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:20<00:00,  1.45s/it]
+ load weights over! 21494.81463432312 ms 
+
+[h3.residency] {"event": "load", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder", "devices": [0, 1, 2, 3, 4, 5, 6, 7], "seconds": 91.23372075427324}
+/usr/local/lib/python3.11/site-packages/torch/nn/utils/weight_norm.py:144: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 3/3 [00:00<00:00, 58.35it/s]
+[model] Diffusers execution device: cuda:0
+[h3.residency] {"event": "host_cache", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/transformer", "bytes": 66280430080, "seconds": 49.90665873512626}
+There are modules in AutoencoderKLMiniMaxH3 that should be kept in float32: ['encoder', 'decoder', 'quant_conv', 'post_quant_conv']. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+There are modules in AutoencoderKLMiniMaxH3Audio that should be kept in float32: ['encoder', 'decoder', 'pre_block', 'dec_in_proj', 'mean_proj', 'logs_proj']. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+[model] H3 VAE tile-parallel decode devices: [0, 1, 2, 3, 4, 5, 6, 7] (staged)
+[h3.residency] {"event": "release", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder", "devices": [0, 1, 2, 3, 4, 5, 6, 7], "seconds": 6.5780193451792}
+
+  0%|          | 0/1 [00:00<?, ?it/s][2026-11-09 01:51:14.251] [info] Intra-node TP communicator established: node_rank=0, local_ranks=8
+ load weights ......
+No index file found. Scanning all safetensors files...
+
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s][A
+                                     
+
+                                                        
+[AProcessing: diffusion_pytorch_model-00001-of-00014.safetensors
+
+  0%|          | 0/1 [01:15<?, ?it/s]
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s][A
+
+Processing files:   7%|鈻�         | 1/14 [00:00<00:03,  3.30it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00002-of-00014.safetensors
+
+  0%|          | 0/1 [01:15<?, ?it/s]
+
+Processing files:   7%|鈻�         | 1/14 [00:00<00:03,  3.30it/s][A
+
+Processing files:  14%|鈻堚枍        | 2/14 [00:00<00:03,  3.85it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00003-of-00014.safetensors
+
+  0%|          | 0/1 [01:16<?, ?it/s]
+
+Processing files:  14%|鈻堚枍        | 2/14 [00:00<00:03,  3.85it/s][A
+
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:00<00:03,  3.64it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00004-of-00014.safetensors
+
+  0%|          | 0/1 [01:16<?, ?it/s]
+
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:00<00:03,  3.64it/s][A
+
+Processing files:  29%|鈻堚枅鈻�       | 4/14 [00:01<00:03,  3.32it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00005-of-00014.safetensors
+
+  0%|          | 0/1 [01:16<?, ?it/s]
+
+Processing files:  29%|鈻堚枅鈻�       | 4/14 [00:01<00:03,  3.32it/s][A
+
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:01<00:02,  3.42it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00006-of-00014.safetensors
+
+  0%|          | 0/1 [01:17<?, ?it/s]
+
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:01<00:02,  3.42it/s][A
+
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:01<00:02,  3.55it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00007-of-00014.safetensors
+
+  0%|          | 0/1 [01:17<?, ?it/s]
+
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:01<00:02,  3.55it/s][A
+
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:01<00:01,  4.04it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00008-of-00014.safetensors
+
+  0%|          | 0/1 [01:17<?, ?it/s]
+
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:01<00:01,  4.04it/s][A
+
+Processing files:  57%|鈻堚枅鈻堚枅鈻堚枊    | 8/14 [00:02<00:01,  4.08it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00009-of-00014.safetensors
+
+  0%|          | 0/1 [01:17<?, ?it/s]
+
+Processing files:  57%|鈻堚枅鈻堚枅鈻堚枊    | 8/14 [00:02<00:01,  4.08it/s][A
+
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:02<00:01,  3.02it/s][A
+                                     
+
+                                                                
+[AProcessing: diffusion_pytorch_model-00010-of-00014.safetensors
+
+  0%|          | 0/1 [01:18<?, ?it/s]
+
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:02<00:01,  3.02it/s][A
+
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:02<00:01,  3.18it/s][A
+                                     
+
+                                                                 
+[AProcessing: diffusion_pytorch_model-00011-of-00014.safetensors
+
+  0%|          | 0/1 [01:18<?, ?it/s]
+
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:02<00:01,  3.18it/s][A
+
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:03<00:00,  3.52it/s][A
+                                     
+
+                                                                 
+[AProcessing: diffusion_pytorch_model-00012-of-00014.safetensors
+
+  0%|          | 0/1 [01:18<?, ?it/s]
+
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:03<00:00,  3.52it/s][A
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:03<00:00,  3.52it/s][A
+                                     
+
+                                                                 
+[AProcessing: diffusion_pytorch_model-00013-of-00014.safetensors
+
+  0%|          | 0/1 [01:19<?, ?it/s]
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:03<00:00,  3.52it/s][A
+
+Processing files:  93%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枎| 13/14 [00:03<00:00,  3.77it/s][A
+                                     
+
+                                                                 
+[AProcessing: diffusion_pytorch_model-00014-of-00014.safetensors
+
+  0%|          | 0/1 [01:19<?, ?it/s]
+
+Processing files:  93%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枎| 13/14 [00:03<00:00,  3.77it/s][A
+
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:03<00:00,  3.66it/s][A
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:03<00:00,  3.56it/s]
+ load weights over! 11244.44055557251 ms 
+
+[h3.residency] {"event": "load", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/transformer", "devices": [0, 1, 2, 3, 4, 5, 6, 7], "seconds": 91.58283450454473}
+
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 1/1 [01:52<00:00, 112.27s/it]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 1/1 [01:52<00:00, 112.27s/it]
+/usr/local/lib/python3.11/site-packages/torch/nn/functional.py:3095: UserWarning: Mismatch dtype between input and weight: input dtype = float, weight dtype = c10::BFloat16, Cannot dispatch to fused implementation. (Triggered internally at /home/pytorch/aten/src/ATen/native/layer_norm.cpp:344.)
+  return torch.rms_norm(input, normalized_shape, weight, eps)
+[2026-11-09 01:53:13.125] [info] Intra-node TP communicator established: node_rank=0, local_ranks=8
+ load weights ......
+Found index file: /public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder/model.safetensors.index.json. Loading shards by index.
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s]
+                                                        
+Processing: model-00006-of-00014.safetensors
+
+Processing files:   0%|          | 0/14 [00:00<?, ?it/s]
+Processing files:   7%|鈻�         | 1/14 [00:02<00:31,  2.41s/it]
+                                                                
+Processing: model-00012-of-00014.safetensors
+
+Processing files:   7%|鈻�         | 1/14 [00:02<00:31,  2.41s/it]
+                                                                
+Processing: model-00008-of-00014.safetensors
+
+Processing files:   7%|鈻�         | 1/14 [00:02<00:31,  2.41s/it]
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:03<00:10,  1.04it/s]
+                                                                
+Processing: model-00002-of-00014.safetensors
+
+Processing files:  21%|鈻堚枅鈻�       | 3/14 [00:03<00:10,  1.04it/s]
+Processing files:  29%|鈻堚枅鈻�       | 4/14 [00:04<00:09,  1.02it/s]
+                                                                
+Processing: model-00005-of-00014.safetensors
+
+Processing files:  29%|鈻堚枅鈻�       | 4/14 [00:04<00:09,  1.02it/s]
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:06<00:10,  1.22s/it]
+                                                                
+Processing: model-00014-of-00014.safetensors
+
+Processing files:  36%|鈻堚枅鈻堚枌      | 5/14 [00:06<00:10,  1.22s/it]
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:06<00:07,  1.06it/s]
+                                                                
+Processing: model-00007-of-00014.safetensors
+
+Processing files:  43%|鈻堚枅鈻堚枅鈻�     | 6/14 [00:06<00:07,  1.06it/s]
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:06<00:04,  1.44it/s]
+                                                                
+Processing: model-00011-of-00014.safetensors
+
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:06<00:04,  1.44it/s]
+                                                                
+Processing: model-00009-of-00014.safetensors
+
+Processing files:  50%|鈻堚枅鈻堚枅鈻�     | 7/14 [00:06<00:04,  1.44it/s]
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:06<00:02,  2.42it/s]
+                                                                
+Processing: model-00003-of-00014.safetensors
+
+Processing files:  64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 9/14 [00:06<00:02,  2.42it/s]
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:06<00:01,  2.92it/s]
+                                                                 
+Processing: model-00010-of-00014.safetensors
+
+Processing files:  71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 10/14 [00:06<00:01,  2.92it/s]
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:07<00:00,  3.47it/s]
+                                                                 
+Processing: model-00001-of-00014.safetensors
+
+Processing files:  79%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 11/14 [00:07<00:00,  3.47it/s]
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:07<00:00,  3.53it/s]
+                                                                 
+Processing: model-00013-of-00014.safetensors
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:07<00:00,  3.53it/s]
+                                                                 
+Processing: model-00004-of-00014.safetensors
+
+Processing files:  86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 12/14 [00:07<00:00,  3.53it/s]
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:09<00:00,  1.47it/s]
+Processing files: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 14/14 [00:09<00:00,  1.45it/s]
+ load weights over! 9901.753187179565 ms 
+
+[h3.residency] {"event": "load", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder", "devices": [0, 1, 2, 3, 4, 5, 6, 7], "seconds": 29.74225021712482}
+[generate] Running MiniMax-H3 FL2VA
+  text:            A dog falls asleep
+  first frame:     True
+  last frame:      False
+  frames:          124
+  steps:           50
+  backend:         InfiniLM
+[h3.residency] {"event": "release", "path": "/public/home/aclsylqidf/shared/MiniMax-H3/diffusers/text_encoder", "devices": [0, 1, 2, 3, 4, 5, 6, 7], "seconds": 1.2794230533763766}
+
+  0%|          | 0/49 [00:00<?, ?it/s]
+  2%|鈻�         | 1/49 [00:04<03:25,  4.29s/it]
+  4%|鈻�         | 2/49 [00:05<02:10,  2.77s/it]
+  6%|鈻�         | 3/49 [00:07<01:39,  2.17s/it]
+  8%|鈻�         | 4/49 [00:09<01:37,  2.17s/it]
+ 10%|鈻�         | 5/49 [00:10<01:16,  1.73s/it]
+ 12%|鈻堚枏        | 6/49 [00:11<01:09,  1.62s/it]
+ 14%|鈻堚枍        | 7/49 [00:13<01:04,  1.53s/it]
+ 16%|鈻堚枊        | 8/49 [00:15<01:07,  1.64s/it]
+ 18%|鈻堚枈        | 9/49 [00:16<00:57,  1.43s/it]
+ 20%|鈻堚枅        | 10/49 [00:17<01:00,  1.56s/it]
+ 22%|鈻堚枅鈻�       | 11/49 [00:19<00:53,  1.41s/it]
+ 24%|鈻堚枅鈻�       | 12/49 [00:20<00:51,  1.39s/it]
+ 27%|鈻堚枅鈻�       | 13/49 [00:21<00:45,  1.26s/it]
+ 29%|鈻堚枅鈻�       | 14/49 [00:23<00:51,  1.48s/it]
+ 31%|鈻堚枅鈻�       | 15/49 [00:24<00:45,  1.33s/it]
+ 33%|鈻堚枅鈻堚枎      | 16/49 [00:25<00:42,  1.30s/it]
+ 35%|鈻堚枅鈻堚枍      | 17/49 [00:27<00:46,  1.46s/it]
+ 37%|鈻堚枅鈻堚枊      | 18/49 [00:28<00:40,  1.31s/it]
+ 39%|鈻堚枅鈻堚枆      | 19/49 [00:30<00:44,  1.50s/it]
+ 41%|鈻堚枅鈻堚枅      | 20/49 [00:31<00:43,  1.50s/it]
+ 43%|鈻堚枅鈻堚枅鈻�     | 21/49 [00:33<00:42,  1.51s/it]
+ 45%|鈻堚枅鈻堚枅鈻�     | 22/49 [00:34<00:40,  1.50s/it]
+ 47%|鈻堚枅鈻堚枅鈻�     | 23/49 [00:36<00:38,  1.47s/it]
+ 49%|鈻堚枅鈻堚枅鈻�     | 24/49 [00:37<00:38,  1.54s/it]
+ 51%|鈻堚枅鈻堚枅鈻�     | 25/49 [00:38<00:33,  1.39s/it]
+ 53%|鈻堚枅鈻堚枅鈻堚枎    | 26/49 [00:40<00:30,  1.33s/it]
+ 55%|鈻堚枅鈻堚枅鈻堚枌    | 27/49 [00:41<00:26,  1.22s/it]
+ 57%|鈻堚枅鈻堚枅鈻堚枊    | 28/49 [00:42<00:24,  1.19s/it]
+ 59%|鈻堚枅鈻堚枅鈻堚枆    | 29/49 [00:43<00:23,  1.17s/it]
+ 61%|鈻堚枅鈻堚枅鈻堚枅    | 30/49 [00:44<00:21,  1.11s/it]
+ 63%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 31/49 [00:45<00:19,  1.06s/it]
+ 65%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 32/49 [00:46<00:20,  1.18s/it]
+ 67%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 33/49 [00:47<00:18,  1.17s/it]
+ 69%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 34/49 [00:48<00:16,  1.11s/it]
+ 71%|鈻堚枅鈻堚枅鈻堚枅鈻堚枏  | 35/49 [00:49<00:14,  1.07s/it]
+ 73%|鈻堚枅鈻堚枅鈻堚枅鈻堚枎  | 36/49 [00:50<00:14,  1.09s/it]
+ 76%|鈻堚枅鈻堚枅鈻堚枅鈻堚枌  | 37/49 [00:51<00:12,  1.05s/it]
+ 78%|鈻堚枅鈻堚枅鈻堚枅鈻堚枈  | 38/49 [00:53<00:13,  1.19s/it]
+ 80%|鈻堚枅鈻堚枅鈻堚枅鈻堚枆  | 39/49 [00:54<00:11,  1.12s/it]
+ 82%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 40/49 [00:55<00:10,  1.19s/it]
+ 84%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 41/49 [00:56<00:09,  1.19s/it]
+ 86%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 42/49 [00:57<00:07,  1.12s/it]
+ 88%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 43/49 [00:59<00:07,  1.22s/it]
+ 90%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 44/49 [01:00<00:06,  1.27s/it]
+ 92%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枏| 45/49 [01:01<00:04,  1.17s/it]
+ 94%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枍| 46/49 [01:10<00:10,  3.54s/it]
+ 96%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枌| 47/49 [01:12<00:05,  2.89s/it]
+ 98%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枈| 48/49 [01:13<00:02,  2.31s/it]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 49/49 [01:20<00:00,  3.76s/it]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 49/49 [01:20<00:00,  1.64s/it]
+
+Encoding video chunks:   0%|          | 0/1 [00:00<?, ?it/s]
+Encoding video chunks: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 1/1 [00:01<00:00,  1.72s/it]
+Encoding video chunks: 100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 1/1 [00:01<00:00,  1.72s/it]
+
+[timing] MiniMax-H3 profile
+  model.pipeline_create                      0.417 s
+  model.condition_encoder_create_and_load   102.826 s
+  model.transformer_create_and_load          0.041 s
+  model.remaining_components_create_and_load   165.734 s
+  model.warmup                             194.972 s
+  input.files_and_references                 0.022 s
+  input.arguments                            0.000 s
+  compute.condition_encoder                  6.145 s
+  input.video_vae_encode                     3.673 s
+  input.audio_vae_encode                     0.000 s (0 calls)
+  compute.h3_transformer                    79.554 s (49 calls, 1.624 s/call)
+  output.video_vae_decode                   13.623 s
+  output.audio_vae_decode                    0.191 s
+  generation.pipeline_total                110.697 s
+  output.media_encode                        2.810 s
+  total.end_to_end                         577.959 s
+  pipeline.other_preprocess_scheduler        7.511 s
+[done] Saved to: $H3_DATA/runs/puppy-native-v2.mp4

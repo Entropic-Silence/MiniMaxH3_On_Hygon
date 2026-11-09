@@ -5,5 +5,6 @@
   "input_sha256": "c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427",
   "tested_kernel_sha256": "f338324d85f9f9dc50f2982bcc7b9e24c0711ddd1b06dd00f60d208319ba6b3f",
   "branch": "dcu8-reproducible",
-  "image_validation": "pending"
+  "image_validation": "complete",
+  "validation_file": "validation/dcu8-first-frame.json"
 }
