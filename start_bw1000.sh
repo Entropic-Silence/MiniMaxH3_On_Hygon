@@ -9,7 +9,9 @@ if [[ ! -d "$ROOT" ]]; then
   mkdir -p "$BASE/runtime"
   tar -xzf "$ARCHIVE" -C "$BASE/runtime"
 fi
+set +u
 source "${DTK_ENV:-/opt/dtk/env.sh}"
+set -u
 export INFINI_ROOT=${INFINI_ROOT:-"$ROOT/.infini"}
 export LD_LIBRARY_PATH="$INFINI_ROOT/lib:${LD_LIBRARY_PATH:-}"
 export PYTHONPATH="$ROOT/InfiniLM/python:$ROOT/InfiniCore/python:$ROOT/third_party/diffusers/src:$ROOT/ninetoothed/src:$ROOT/tools:${PYTHONPATH:-}"
