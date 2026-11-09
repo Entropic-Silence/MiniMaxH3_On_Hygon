@@ -1,6 +1,4 @@
+runtime/
+outputs/
 __pycache__/
 *.pyc
-*.mp4
-*.pt
-*.hsaco
-*.so
