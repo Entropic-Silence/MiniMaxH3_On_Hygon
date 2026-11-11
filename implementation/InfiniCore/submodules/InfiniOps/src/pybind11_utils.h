@@ -1,0 +1,227 @@
+#ifndef INFINI_OPS_PYBIND11_UTILS_H_
+#define INFINI_OPS_PYBIND11_UTILS_H_
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+#include <algorithm>
+
+#include "host_range_profiler.h"
+#include "tensor.h"
+#include "torch/device_.h"
+
+namespace py = pybind11;
+
+namespace infini::ops {
+
+namespace detail {
+
+template <Device::Type... kDevs>
+std::unordered_map<std::string, Device::Type> BuildTorchNameMap(
+    List<kDevs...>) {
+  std::unordered_map<std::string, Device::Type> map;
+  (map.emplace(std::string{TorchDeviceName<kDevs>::kValue}, kDevs), ...);
+  return map;
+}
+
+}  // namespace detail
+
+inline DataType DataTypeFromString(const std::string& name) {
+  // InfiniRT has no bool dtype; carry bool tensor storage as byte data and
+  // restore bool semantics in operators that accept bool tensors.
+  if (name == "bool") return DataType::kUInt8;
+
+  return kStringToDataType.at(name);
+}
+
+namespace detail {
+
+inline DataType DataTypeFromPybind11HandleImpl(py::handle obj) {
+  auto dtype_str{py::str(obj).cast<std::string>()};
+  const auto pos{dtype_str.find_last_of('.')};
+
+  return DataTypeFromString(
+      pos == std::string::npos ? dtype_str : dtype_str.substr(pos + 1));
+}
+
+}  // namespace detail
+
+inline DataType DataTypeFromPybind11Handle(py::handle obj) {
+  [[maybe_unused]] HostRangeScope host_range_tensor_conversion{
+      HostRangeLayer::kTensorConversion};
+  return detail::DataTypeFromPybind11HandleImpl(obj);
+}
+
+template <typename T = void>
+inline Device::Type DeviceTypeFromString(const std::string& name) {
+  static const auto kTorchNameToTypes{
+      detail::BuildTorchNameMap(ActiveDevices<T>{})};
+
+  auto it{kTorchNameToTypes.find(name)};
+
+  if (it != kTorchNameToTypes.cend()) {
+    return it->second;
+  }
+
+  std::vector<std::string> supported_names;
+
+  for (const auto& [torch_name, device_type] : kTorchNameToTypes) {
+    const auto internal_name = std::string{Device::StringFromType(device_type)};
+
+    if (name == internal_name) {
+      return device_type;
+    }
+
+    supported_names.push_back(torch_name);
+    supported_names.push_back(internal_name);
+  }
+
+  std::sort(supported_names.begin(), supported_names.end());
+  supported_names.erase(
+      std::unique(supported_names.begin(), supported_names.end()),
+      supported_names.end());
+
+  std::string message = "Unsupported device type `" + name +
+                        "` for this InfiniOps build. Supported device names: ";
+
+  for (std::size_t i = 0; i < supported_names.size(); ++i) {
+    if (i != 0) {
+      message += ", ";
+    }
+    message += supported_names[i];
+  }
+
+  message += ". Rebuild InfiniOps with the matching backend enabled.";
+
+  throw py::value_error(message);
+}
+
+// Returns `nullopt` rather than aborting when the name does not resolve.
+// Used by generated pybind bindings to query implementation indices for
+// devices an op may not support, without crashing the process.
+template <typename T = void>
+inline std::optional<Device::Type> TryDeviceTypeFromString(
+    const std::string& name) {
+  static const auto kTorchNameToTypes{
+      detail::BuildTorchNameMap(ActiveDevices<T>{})};
+
+  auto it{kTorchNameToTypes.find(name)};
+
+  if (it != kTorchNameToTypes.cend()) {
+    return it->second;
+  }
+
+  static const std::unordered_map<std::string, Device::Type> kPlatformNames{
+      {"cpu", Device::Type::kCpu},
+      {"nvidia", Device::Type::kNvidia},
+      {"cambricon", Device::Type::kCambricon},
+      {"ascend", Device::Type::kAscend},
+      {"metax", Device::Type::kMetax},
+      {"moore", Device::Type::kMoore},
+      {"iluvatar", Device::Type::kIluvatar},
+      {"hygon", Device::Type::kHygon},
+  };
+
+  auto platform_it{kPlatformNames.find(name)};
+
+  if (platform_it != kPlatformNames.cend()) {
+    return platform_it->second;
+  }
+
+  return std::nullopt;
+}
+
+namespace detail {
+
+inline Device DeviceFromPybind11HandleImpl(py::handle obj) {
+  auto device_obj{obj.attr("device")};
+  auto device_type_str{device_obj.attr("type").cast<std::string>()};
+  auto device_index_obj{device_obj.attr("index")};
+  auto device_index{device_index_obj.is_none() ? 0
+                                               : device_index_obj.cast<int>()};
+
+  return Device{DeviceTypeFromString(device_type_str), device_index};
+}
+
+template <typename Metadata>
+Metadata MetadataFromPybind11Sequence(py::handle obj) {
+  auto values{py::reinterpret_borrow<py::sequence>(obj)};
+  Metadata metadata;
+  metadata.reserve(values.size());
+
+  for (const auto& value : values) {
+    metadata.push_back(value.cast<typename Metadata::value_type>());
+  }
+
+  return metadata;
+}
+
+inline Tensor TensorFromPybind11HandleImpl(py::handle obj) {
+  auto data{
+      reinterpret_cast<void*>(obj.attr("data_ptr")().cast<std::uintptr_t>())};
+
+  auto shape{MetadataFromPybind11Sequence<Tensor::Shape>(obj.attr("shape"))};
+
+  auto dtype{DataTypeFromPybind11HandleImpl(obj.attr("dtype"))};
+
+  auto device{DeviceFromPybind11HandleImpl(obj)};
+
+  auto strides{
+      MetadataFromPybind11Sequence<Tensor::Strides>(obj.attr("stride")())};
+
+  return Tensor{data, std::move(shape), dtype, device, std::move(strides)};
+}
+
+}  // namespace detail
+
+inline Device DeviceFromPybind11Handle(py::handle obj) {
+  [[maybe_unused]] HostRangeScope host_range_device_conversion{
+      HostRangeLayer::kDeviceConversion};
+  return detail::DeviceFromPybind11HandleImpl(obj);
+}
+
+inline Tensor TensorFromPybind11Handle(py::handle obj) {
+  [[maybe_unused]] HostRangeScope host_range_tensor_conversion{
+      HostRangeLayer::kTensorConversion};
+  return detail::TensorFromPybind11HandleImpl(obj);
+}
+
+inline std::optional<Tensor> OptionalTensorFromPybind11Handle(
+    const std::optional<py::object>& obj) {
+  [[maybe_unused]] HostRangeScope host_range_tensor_conversion{
+      HostRangeLayer::kTensorConversion};
+  if (!obj.has_value() || obj->is_none()) return std::nullopt;
+  return detail::TensorFromPybind11HandleImpl(*obj);
+}
+
+inline std::vector<Tensor> VectorTensorFromPybind11Handle(
+    const std::vector<py::object>& objs) {
+  [[maybe_unused]] HostRangeScope host_range_tensor_conversion{
+      HostRangeLayer::kTensorConversion};
+  std::vector<Tensor> result;
+  result.reserve(objs.size());
+  for (const auto& obj : objs) {
+    result.push_back(detail::TensorFromPybind11HandleImpl(obj));
+  }
+  return result;
+}
+
+inline std::vector<std::optional<Tensor>>
+VectorOptionalTensorFromPybind11Handle(const std::vector<py::object>& objs) {
+  [[maybe_unused]] HostRangeScope host_range_tensor_conversion{
+      HostRangeLayer::kTensorConversion};
+  std::vector<std::optional<Tensor>> result;
+  result.reserve(objs.size());
+  for (const auto& obj : objs) {
+    if (obj.is_none()) {
+      result.push_back(std::nullopt);
+    } else {
+      result.push_back(detail::TensorFromPybind11HandleImpl(obj));
+    }
+  }
+  return result;
+}
+
+}  // namespace infini::ops
+
+#endif

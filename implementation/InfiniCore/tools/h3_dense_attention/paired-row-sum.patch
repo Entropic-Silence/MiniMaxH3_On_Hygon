@@ -1,0 +1,48 @@
+--- v20/softmax.h
++++ v21/softmax.h
+@@ -569,7 +569,21 @@
+             // We do that reduce at the end when we need to normalize the softmax.
+ #if H3_SUM_FIX == 1
+             #pragma unroll
+-            for (int h3_mi = 0; h3_mi < size(row_sum); ++h3_mi) {
++            for (int h3_mi = 0; h3_mi < kNRows / 2 * 2; h3_mi += 2) {
++                H3Float2 h3_prev = {row_sum(h3_mi), row_sum(h3_mi + 1)};
++                H3Float2 h3_scale = {h3_row_scales(h3_mi), h3_row_scales(h3_mi + 1)};
++                H3Float2 h3_first = {scores(h3_mi, 0), scores(h3_mi + 1, 0)};
++                H3Float2 h3_sum = h3_pk_fma(h3_prev, h3_scale, h3_first);
++                #pragma unroll
++                for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) {
++                    H3Float2 h3_next = {scores(h3_mi, h3_ni), scores(h3_mi + 1, h3_ni)};
++                    h3_sum = h3_pk_add(h3_sum, h3_next);
++                }
++                row_sum(h3_mi) = h3_sum.x;
++                row_sum(h3_mi + 1) = h3_sum.y;
++            }
++            if constexpr (kNRows % 2 != 0) {
++                constexpr int h3_mi = kNRows - 1;
+                 float h3_sum = __builtin_elementwise_fma(row_sum(h3_mi), h3_row_scales(h3_mi), scores(h3_mi, 0));
+                 #pragma unroll
+                 for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) h3_sum += scores(h3_mi, h3_ni);
+@@ -656,7 +670,21 @@
+             // We do that reduce at the end when we need to normalize the softmax.
+ #if H3_SUM_FIX == 1
+             #pragma unroll
+-            for (int h3_mi = 0; h3_mi < size(row_sum); ++h3_mi) {
++            for (int h3_mi = 0; h3_mi < kNRows / 2 * 2; h3_mi += 2) {
++                H3Float2 h3_prev = {row_sum(h3_mi), row_sum(h3_mi + 1)};
++                H3Float2 h3_scale = {h3_row_scales(h3_mi), h3_row_scales(h3_mi + 1)};
++                H3Float2 h3_first = {scores(h3_mi, 0), scores(h3_mi + 1, 0)};
++                H3Float2 h3_sum = h3_pk_fma(h3_prev, h3_scale, h3_first);
++                #pragma unroll
++                for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) {
++                    H3Float2 h3_next = {scores(h3_mi, h3_ni), scores(h3_mi + 1, h3_ni)};
++                    h3_sum = h3_pk_add(h3_sum, h3_next);
++                }
++                row_sum(h3_mi) = h3_sum.x;
++                row_sum(h3_mi + 1) = h3_sum.y;
++            }
++            if constexpr (kNRows % 2 != 0) {
++                constexpr int h3_mi = kNRows - 1;
+                 float h3_sum = __builtin_elementwise_fma(row_sum(h3_mi), h3_row_scales(h3_mi), scores(h3_mi, 0));
+                 #pragma unroll
+                 for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) h3_sum += scores(h3_mi, h3_ni);
