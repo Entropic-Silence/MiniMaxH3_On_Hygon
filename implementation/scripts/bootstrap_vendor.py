@@ -5,7 +5,11 @@ root=Path(__file__).resolve().parents[1]
 assert sys.prefix!=sys.base_prefix,'Activate the project virtual environment before installing dependencies'
 assert sys.platform=='linux' and sys.version_info[:2]==(3,11),'This runtime lock targets Linux CPython 3.11'
 import torch
-assert torch.__version__=='2.9.0+das.opt1.dtk2604',torch.__version__
+assert torch.__version__.split('+',1)[0]=='2.9.0',torch.__version__
+assert torch.cuda.is_available()
+arch=getattr(torch.cuda.get_device_properties(0),'gcnArchName','').split(':',1)[0]
+assert arch=='gfx936',arch
+print('DAS_BASE',importlib.metadata.version('torch'),torch.__version__,arch,flush=True)
 wheelhouse=Path(os.environ.get('H3_WHEELHOUSE',str(root/'third_party/wheels')));wheelhouse.mkdir(parents=True,exist_ok=True)
 for item in json.loads((root/'configs/vendor-packages.json').read_text()):
  name,version=item['file'].split('-')[:2]
