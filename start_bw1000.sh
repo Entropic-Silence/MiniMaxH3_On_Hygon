@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+if [[ -e /etc/gitconfig && ! -r /etc/gitconfig ]]; then export GIT_CONFIG_NOSYSTEM=1; fi
 BASE=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 ACTION=${1:-generate}; shift || true
 ROOT="$BASE/implementation"
@@ -11,10 +12,13 @@ set +u
 source "${DTK_ENV:-/opt/dtk/env.sh}"
 set -u
 if [[ "$ACTION" == build || "$ACTION" == reproduce ]]; then
-  python3 -m venv --system-site-packages "$BASE/runtime/venv"
+  python3 -m venv --without-pip --system-site-packages "$BASE/runtime/venv"
 fi
 if [[ -f "$BASE/runtime/venv/bin/activate" ]]; then source "$BASE/runtime/venv/bin/activate"; fi
 export PYTHON=python3
+mkdir -p "$BASE/runtime/cache" "$BASE/runtime/tmp"
+export TRITON_CACHE_DIR="$BASE/runtime/cache" TMPDIR="$BASE/runtime/tmp"
+export TRITON_CACHE_MANAGER=ifab_triton_cache:AfsCacheManager
 export INFINI_ROOT=${INFINI_ROOT:-"$ROOT/.infini"}
 export LD_LIBRARY_PATH="$INFINI_ROOT/lib:${LD_LIBRARY_PATH:-}"
 export PYTHONPATH="$ROOT/InfiniLM/python:$ROOT/InfiniCore/python:$ROOT/third_party/diffusers/src:$ROOT/ninetoothed/src:$ROOT/tools:${PYTHONPATH:-}"
