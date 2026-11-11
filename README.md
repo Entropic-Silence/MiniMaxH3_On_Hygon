@@ -33,5 +33,3 @@ bash run_dcu8_workflow.sh compare
 完整计算实现位于 source/minimax_dcu8_bundle.tar.gz，包含 InfiniCore、InfiniLM、NineToothed 和构建材料。两个环境分别重建的新注意力库与实际测试二进制逐字节一致。排查兼容性时，可设置 H3_DENSE_TILE_ENABLE=0 切回原注意力路径，再对同一输入进行比较。
 
 源码包 SHA256：`cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512`。
-
-本分支与 hygon-bw1000 共享同一套经过验证的计算实现，区别是说明组织与发布入口命名。包内上游代码沿用原许可证和版权声明，模型权重按其原有许可单独获取。本项目不承诺任意硬件上的相同性能或已达到理论峰值。
