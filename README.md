@@ -4,7 +4,7 @@ MiniMax-H3 的海光 BW1000 八卡实现，包含序列并行、矩阵乘法调�
 
 ## 运行环境
 
-Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，以及配套的海光 FlashAttention、HIP BLAS 和 CCL。基础镜像需提供这些硬件组件、Git、C/C++ 编译工具和 Python venv。获取集成仓库后，首次构建需要访问 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
+Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，HIP BLAS 和 CCL 由 DTK 提供。基础镜像需提供匹配的 PyTorch、DTK、Git、C/C++ 编译工具和 Python venv。入口根据公开依赖记录自动安装海光 Triton 3.5.1 与 FlashAttention 2.8.3，安装前校验 SHA256。获取集成仓库后，首次构建需要访问 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
 
 ## 完整运行
 

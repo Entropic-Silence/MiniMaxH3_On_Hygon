@@ -1,0 +1,65 @@
+[
+  {
+    "file": "triton-3.5.1+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
+    "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/triton-3.5.1%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
+    "sha256": "e397b16365da22508353ce44a45f5be82f8ee58e49853a3df06aa8f6f83d5581",
+    "bytes": 105484167
+  },
+  {
+    "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
+    "sha256": "24d4021bf4ace04cf3c417f60affebe134128c0626a5b136230989812e66c18a",
+    "bytes": 658898543,
+    "parts": [
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part00",
+        "sha256": "052d13e576b7930775cbdacd33ea6fec1fcd9f1d3c32bd399f020b337a6c7565",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part01",
+        "sha256": "d91b26e4be48976e06a1b26762830c6fc3296bdc736210886de25c579b2766f5",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part02",
+        "sha256": "1e3f31d755949e5cf22a7f6f22ca67c22b51779b61b8ed4df546091d1c997766",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part03",
+        "sha256": "6d9cd0aae204e1b7ce903ca2e245327819f08bf2ea4f0b26424b71b0489fa76e",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part04",
+        "sha256": "e9087fc0331bfd127126fee8fc71b2d235d53d9efdf48259dd5d57730f9b2067",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part05",
+        "sha256": "cb3eb2750f67a029d70cc6536c7a5589e79d1cff0c2d98bed0f2ae8ef726c3cb",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part06",
+        "sha256": "5c80a9a614f7e603737090c0c775731fbdc14cb5a8bb075b113ad0632519ec46",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part07",
+        "sha256": "9926d4eec8f650232af16c2619e8772e6b6be2b69848702841a03784858b63d6",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part08",
+        "sha256": "933bacb86ed5eddecc9e83bbb4ce1d1bd80a3230debb00dded7b2fb69f81074c",
+        "bytes": 67108864
+      },
+      {
+        "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/flash_attn-2.8.3%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part09",
+        "sha256": "a1923fd465bd0b28dc8dddad24e42c3a824b8035ab98d7aa6f80065123dee7bc",
+        "bytes": 54918767
+      }
+    ]
+  }
+]

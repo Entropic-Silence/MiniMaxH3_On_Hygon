@@ -8,14 +8,15 @@ if [[ "$ACTION" == fetch || "$ACTION" == build || "$ACTION" == reproduce ]]; the
   python3 "$BASE/fetch_sources.py"
 fi
 if [[ "$ACTION" == fetch ]]; then exit 0; fi
+H3_BASE_PYTHON=${H3_BASE_PYTHON:-$(command -v python3)}
 set +u
 source "${DTK_ENV:-/opt/dtk/env.sh}"
 set -u
 if [[ "$ACTION" == build || "$ACTION" == reproduce ]]; then
-  python3 -m venv --without-pip --system-site-packages "$BASE/runtime/venv"
+  "$H3_BASE_PYTHON" -m venv --without-pip --system-site-packages "$BASE/runtime/venv"
 fi
 if [[ -f "$BASE/runtime/venv/bin/activate" ]]; then source "$BASE/runtime/venv/bin/activate"; fi
-export PYTHON=python3
+export PYTHON="$BASE/runtime/venv/bin/python"
 mkdir -p "$BASE/runtime/cache" "$BASE/runtime/tmp"
 export TRITON_CACHE_DIR="$BASE/runtime/cache" TMPDIR="$BASE/runtime/tmp"
 export TRITON_CACHE_MANAGER=ifab_triton_cache:AfsCacheManager
