@@ -9,13 +9,13 @@ Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9�
 ## 完整运行
 
 ```bash
-GIT_CONFIG_NOSYSTEM=1 git clone --branch hygon-bw1000 https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
+GIT_CONFIG_NOSYSTEM=1 git -c checkout.workers=1 clone --branch hygon-bw1000 https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
 cd MiniMaxH3_On_Hygon
 export H3_MODEL=/path/to/MiniMax-H3
 bash start_bw1000.sh reproduce
 ```
 
-入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。构建过程保存在 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。完整构建日志为 outputs/build.log，细分构建记录位于 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
 
 ## 源码版本
 
@@ -42,7 +42,7 @@ InfiniCore 负责 BW1000 GEMM 形状调度、直接写入的 QKV 数据布局、
 
 | 计时项 | PyTorch 参考 | 优化实现 |
 | --- | ---: | ---: |
-| 入口总耗时，含加载与预热 | 639.842 s | 577.959 s |
+| 模型生成进程总耗时 | 639.842 s | 577.959 s |
 | 生成流水线 | 441.477 s | 110.697 s |
 | 49 次 DiT 前向合计 | 406.550 s | 79.554 s |
 
