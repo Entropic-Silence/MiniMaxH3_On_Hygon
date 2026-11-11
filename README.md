@@ -4,7 +4,7 @@ MiniMax-H3 的海光 BW1000 八卡实现，包含序列并行、矩阵乘法调�
 
 ## 运行环境
 
-Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，以及配套的海光 FlashAttention、HIP BLAS 和 CCL。基础镜像需提供这些硬件组件、Git、C/C++ 编译工具和 Python venv。首次构建需要访问 GitHub 和 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
+Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，以及配套的海光 FlashAttention、HIP BLAS 和 CCL。基础镜像需提供这些硬件组件、Git、C/C++ 编译工具和 Python venv。获取集成仓库后，首次构建需要访问 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
 
 ## 完整运行
 
@@ -15,7 +15,7 @@ export H3_MODEL=/path/to/MiniMax-H3
 bash start_bw1000.sh reproduce
 ```
 
-入口依次获取 repositories.lock.json 中的固定源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。构建过程保存在 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。构建过程保存在 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
 
 ## 源码版本
 
@@ -30,7 +30,7 @@ bash start_bw1000.sh reproduce
 | NineToothed | https://github.com/Entropic-Silence/NineToothed_Hygon | bw1000 | `92b0ccff07336a7417d631b55342bd80d9b65aa4` |
 | Diffusers | https://github.com/Entropic-Silence/Diffusers_Hygon | bw1000 | `77df80c3cd62c413a34b9e2fd1089b3b91dd2610` |
 
-InfiniCore 的 submodules 目录完整收录 InfiniRT、InfiniOps、InfiniCCL；tools/h3_dense_attention/prepared 收录 H3Attention 的 FlashAttention、CUTLASS 和内核入口。各嵌入目录与对应独立仓库使用相同文件内容。InfiniLM 的 spdlog、JSON 等上游依赖保留在源码树中。
+集成仓库的 implementation 目录完整收录四个主组件源码，文件校验值位于 vendored-sources.json。InfiniCore 的 submodules 目录完整收录 InfiniRT、InfiniOps、InfiniCCL；tools/h3_dense_attention/prepared 收录 H3Attention 的 FlashAttention、CUTLASS 和内核入口。各嵌入目录与对应独立仓库使用相同文件内容。InfiniLM 的 spdlog、JSON 等上游依赖保留在源码树中。
 
 ## 计算路径
 

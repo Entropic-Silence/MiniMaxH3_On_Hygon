@@ -1,0 +1,9 @@
+jupyter
+jupytext
+matplotlib
+pandas
+pytest
+pytest-cov
+ruff
+torch
+triton

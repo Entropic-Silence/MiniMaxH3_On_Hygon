@@ -1,0 +1,92 @@
+--- official/softmax.h
++++ candidate/softmax.h
+@@ -511,12 +511,28 @@
+             // Reshape acc_o from (MMA=4, MMA_M, MMA_K) to (nrow=(2, MMA_M), ncol=(2, MMA_K))
+             Tensor acc_o_rowcol = make_tensor(acc_o.data(), flash::convert_layout_acc_rowcol(acc_o.layout()));
+             static_assert(decltype(size<0>(acc_o_rowcol))::value == kNRows);
++
++#if H3_IDENTITY_RESCALE == 3
++            bool h3_rescale_needed = false;
++            #pragma unroll
++            for (int h3_mi = 0; h3_mi < size(row_max); ++h3_mi) {
++                h3_rescale_needed |= scores_max_prev(h3_mi) != row_max(h3_mi)
++                    || row_max(h3_mi) == INFINITY || row_max(h3_mi) == -INFINITY;
++            }
++            if (__any_sync((uint64_t)0xffffffffffffffff, h3_rescale_needed)) {
++#endif
+             #pragma unroll
+             for (int mi = 0; mi < size(row_max); ++mi) {
+                 float scores_max_cur = !Check_inf
+                     ? row_max(mi)
+                     : (row_max(mi) == -INFINITY ? 0.0f : row_max(mi));
+                 float scores_scale = __builtin_amdgcn_exp2f((scores_max_prev(mi) - scores_max_cur) * softmax_scale_log2);
++
++#if H3_IDENTITY_RESCALE == 1
++                if (scores_scale != 1.0f) {
++#elif H3_IDENTITY_RESCALE == 2
++                if (__any_sync((uint64_t)0xffffffffffffffff, scores_scale != 1.0f)) {
++#endif
+                 row_sum(mi) *= scores_scale;
+                 #if defined(__gfx928__) 
+                 #pragma unroll
+@@ -531,7 +547,14 @@
+                     acc_o_rowcol(mi, ni + 1) = res.y; 
+                 }
+                 #endif
+-            }
++#if H3_IDENTITY_RESCALE == 1 || H3_IDENTITY_RESCALE == 2
++                }
++#endif
++            }
++
++#if H3_IDENTITY_RESCALE == 3
++            }
++#endif
+             flash::scale_apply_exp2(scores, row_max, softmax_scale_log2);
+             // We don't do the reduce across threads here since we don't need to use the row_sum.
+             // We do that reduce at the end when we need to normalize the softmax.
+@@ -556,12 +579,28 @@
+             // Reshape acc_o from (MMA=4, MMA_M, MMA_K) to (nrow=(2, MMA_M), ncol=(2, MMA_K))
+             Tensor acc_o_rowcol = make_tensor(acc_o.data(), flash::convert_layout_acc_rowcol(acc_o.layout()));
+             static_assert(decltype(size<0>(acc_o_rowcol))::value == kNRows);
++
++#if H3_IDENTITY_RESCALE == 3
++            bool h3_rescale_needed = false;
++            #pragma unroll
++            for (int h3_mi = 0; h3_mi < size(row_max); ++h3_mi) {
++                h3_rescale_needed |= scores_max_prev(h3_mi) != row_max(h3_mi)
++                    || row_max(h3_mi) == INFINITY || row_max(h3_mi) == -INFINITY;
++            }
++            if (__any_sync((uint64_t)0xffffffffffffffff, h3_rescale_needed)) {
++#endif
+             #pragma unroll
+             for (int mi = 0; mi < size(row_max); ++mi) {
+                 float scores_max_cur = !Check_inf
+                     ? row_max(mi)
+                     : (row_max(mi) == -INFINITY ? 0.0f : row_max(mi));
+                 float scores_scale = __builtin_amdgcn_exp2f((scores_max_prev(mi) - scores_max_cur) * softmax_scale_log2);
++
++#if H3_IDENTITY_RESCALE == 1
++                if (scores_scale != 1.0f) {
++#elif H3_IDENTITY_RESCALE == 2
++                if (__any_sync((uint64_t)0xffffffffffffffff, scores_scale != 1.0f)) {
++#endif
+                 row_sum(mi) *= scores_scale;
+                 #if defined(__gfx928__) 
+                 #pragma unroll
+@@ -576,7 +615,14 @@
+                     acc_o_rowcol(mi, ni + 1) = res.y; 
+                 }
+                 #endif
+-            }
++#if H3_IDENTITY_RESCALE == 1 || H3_IDENTITY_RESCALE == 2
++                }
++#endif
++            }
++
++#if H3_IDENTITY_RESCALE == 3
++            }
++#endif
+             flash::scale_apply_exp2(scores, row_max, softmax_scale_log2);
+             // We don't do the reduce across threads here since we don't need to use the row_sum.
+             // We do that reduce at the end when we need to normalize the softmax.

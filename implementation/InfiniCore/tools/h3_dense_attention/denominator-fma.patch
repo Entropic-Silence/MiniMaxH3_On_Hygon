@@ -1,0 +1,98 @@
+--- v19/softmax.h
++++ v20/softmax.h
+@@ -511,6 +511,7 @@
+             // Reshape acc_o from (MMA=4, MMA_M, MMA_K) to (nrow=(2, MMA_M), ncol=(2, MMA_K))
+             Tensor acc_o_rowcol = make_tensor(acc_o.data(), flash::convert_layout_acc_rowcol(acc_o.layout()));
+             static_assert(decltype(size<0>(acc_o_rowcol))::value == kNRows);
++            Tensor h3_row_scales = make_fragment_like(row_sum);
+ 
+ #if H3_IDENTITY_RESCALE == 3
+             bool h3_rescale_needed = false;
+@@ -527,13 +528,21 @@
+                     ? row_max(mi)
+                     : (row_max(mi) == -INFINITY ? 0.0f : row_max(mi));
+                 float scores_scale = __builtin_amdgcn_exp2f((scores_max_prev(mi) - scores_max_cur) * softmax_scale_log2);
++#if H3_SUM_FIX == 1
++                h3_row_scales(mi) = scores_scale;
++#elif H3_SUM_FIX == 2
++                row_sum(mi) *= scores_scale;
++#endif
++
+ 
+ #if H3_IDENTITY_RESCALE == 1
+                 if (scores_scale != 1.0f) {
+ #elif H3_IDENTITY_RESCALE == 2
+                 if (__any_sync((uint64_t)0xffffffffffffffff, scores_scale != 1.0f)) {
+ #endif
++#if H3_SUM_FIX == 0
+                 row_sum(mi) *= scores_scale;
++#endif
+                 #if defined(__gfx928__) 
+                 #pragma unroll
+                 for (int ni = 0; ni < size<1>(acc_o_rowcol); ++ni) { acc_o_rowcol(mi, ni) *= scores_scale; }
+@@ -558,7 +567,17 @@
+             flash::scale_apply_exp2(scores, row_max, softmax_scale_log2);
+             // We don't do the reduce across threads here since we don't need to use the row_sum.
+             // We do that reduce at the end when we need to normalize the softmax.
++#if H3_SUM_FIX == 1
++            #pragma unroll
++            for (int h3_mi = 0; h3_mi < size(row_sum); ++h3_mi) {
++                float h3_sum = __builtin_elementwise_fma(row_sum(h3_mi), h3_row_scales(h3_mi), scores(h3_mi, 0));
++                #pragma unroll
++                for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) h3_sum += scores(h3_mi, h3_ni);
++                row_sum(h3_mi) = h3_sum;
++            }
++#else
+             flash::reduce_sum</*zero_init=*/false>(scores, row_sum);
++#endif
+         }
+         
+     };
+@@ -579,6 +598,7 @@
+             // Reshape acc_o from (MMA=4, MMA_M, MMA_K) to (nrow=(2, MMA_M), ncol=(2, MMA_K))
+             Tensor acc_o_rowcol = make_tensor(acc_o.data(), flash::convert_layout_acc_rowcol(acc_o.layout()));
+             static_assert(decltype(size<0>(acc_o_rowcol))::value == kNRows);
++            Tensor h3_row_scales = make_fragment_like(row_sum);
+ 
+ #if H3_IDENTITY_RESCALE == 3
+             bool h3_rescale_needed = false;
+@@ -595,13 +615,21 @@
+                     ? row_max(mi)
+                     : (row_max(mi) == -INFINITY ? 0.0f : row_max(mi));
+                 float scores_scale = __builtin_amdgcn_exp2f((scores_max_prev(mi) - scores_max_cur) * softmax_scale_log2);
++#if H3_SUM_FIX == 1
++                h3_row_scales(mi) = scores_scale;
++#elif H3_SUM_FIX == 2
++                row_sum(mi) *= scores_scale;
++#endif
++
+ 
+ #if H3_IDENTITY_RESCALE == 1
+                 if (scores_scale != 1.0f) {
+ #elif H3_IDENTITY_RESCALE == 2
+                 if (__any_sync((uint64_t)0xffffffffffffffff, scores_scale != 1.0f)) {
+ #endif
++#if H3_SUM_FIX == 0
+                 row_sum(mi) *= scores_scale;
++#endif
+                 #if defined(__gfx928__) 
+                 #pragma unroll
+                 for (int ni = 0; ni < size<1>(acc_o_rowcol); ++ni) { acc_o_rowcol(mi, ni) *= scores_scale; }
+@@ -626,7 +654,17 @@
+             flash::scale_apply_exp2(scores, row_max, softmax_scale_log2);
+             // We don't do the reduce across threads here since we don't need to use the row_sum.
+             // We do that reduce at the end when we need to normalize the softmax.
++#if H3_SUM_FIX == 1
++            #pragma unroll
++            for (int h3_mi = 0; h3_mi < size(row_sum); ++h3_mi) {
++                float h3_sum = __builtin_elementwise_fma(row_sum(h3_mi), h3_row_scales(h3_mi), scores(h3_mi, 0));
++                #pragma unroll
++                for (int h3_ni = 1; h3_ni < size<1>(scores); ++h3_ni) h3_sum += scores(h3_mi, h3_ni);
++                row_sum(h3_mi) = h3_sum;
++            }
++#else
+             flash::reduce_sum</*zero_init=*/false>(scores, row_sum);
++#endif
+         }
+         return flash::convert_type<Element>(acc_s);
+     };
