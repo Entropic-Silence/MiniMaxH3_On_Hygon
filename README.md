@@ -9,7 +9,7 @@ Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9�
 ## 完整运行
 
 ```bash
-git clone --branch dcu8-reproducible https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
+GIT_CONFIG_NOSYSTEM=1 git clone --branch dcu8-reproducible https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
 cd MiniMaxH3_On_Hygon
 export H3_MODEL=/path/to/MiniMax-H3
 bash run_dcu8_workflow.sh reproduce
