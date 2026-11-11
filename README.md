@@ -33,5 +33,3 @@ bash start_bw1000.sh compare
 source/h3_bw1000_source.tar.gz 是可重建源码快照，包含 InfiniCore、InfiniLM、NineToothed 及相关构建材料。新注意力库在两个环境独立重建后与被测二进制逐字节一致。显式设置 H3_DENSE_TILE_ENABLE=0 可回退旧注意力路径。
 
 源码包 SHA256：`cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512`。
-
-本分支与 dcu8-reproducible 共享同一套经过验证的计算实现，区别是说明组织与发布入口命名。包内上游代码沿用原许可证和版权声明，模型权重按其原有许可单独获取。本项目不承诺任意硬件上的相同性能或已达到理论峰值。
