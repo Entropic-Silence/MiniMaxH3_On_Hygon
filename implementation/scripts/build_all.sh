@@ -19,6 +19,7 @@ export INFINI_ROOT=${INFINI_ROOT:-"$H3_ROOT/.infini"}
 export LD_LIBRARY_PATH="$INFINI_ROOT/lib:${LD_LIBRARY_PATH:-}"
 export PYTHONPATH="$H3_ROOT/ninetoothed/src:$H3_ROOT/tools:${PYTHONPATH:-}"
 export HYGON_CUDA_HOME=${HYGON_CUDA_HOME:-/opt/dtk/cuda/cuda}
+"$H3_PYTHON" "$H3_ROOT/scripts/bootstrap_vendor.py"
 HYGON_ARCH=$($H3_PYTHON -c 'from ninetoothed.platform import current_target; print(current_target().arch)')
 export HYGON_ARCH
 mkdir -p "$H3_ROOT/build" "$H3_ROOT/logs/build"
