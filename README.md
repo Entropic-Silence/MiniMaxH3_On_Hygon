@@ -1,23 +1,23 @@
-# MiniMax H3 海光八卡推理
+# MiniMax H3 八卡构建与运行
 
 通过固定版本源码完成 MiniMax-H3 八卡构建、视频生成及参考结果比较。运行入口自动准备工作目录并保存各阶段日志。
 
-## 运行环境
+## 准备环境
 
 Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，HIP BLAS 和 CCL 由 DTK 提供。基础镜像需提供匹配的 PyTorch、DTK、Git、C/C++ 编译工具和 Python venv。入口根据公开依赖记录自动安装海光 Triton 3.5.1 与 FlashAttention 2.8.3，安装前校验 SHA256。获取集成仓库后，首次构建需要访问 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
 
-## 完整运行
+## 从源码生成视频
 
 ```bash
-GIT_CONFIG_NOSYSTEM=1 git clone --branch dcu8-reproducible https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
+GIT_CONFIG_NOSYSTEM=1 git -c checkout.workers=1 clone --branch dcu8-reproducible https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
 cd MiniMaxH3_On_Hygon
 export H3_MODEL=/path/to/MiniMax-H3
 bash run_dcu8_workflow.sh reproduce
 ```
 
-入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。构建过程保存在 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+`reproduce` 会从源码校验开始，建立虚拟环境并安装固定依赖，随后编译 AOT 内核及原生扩展。构建完成后，它用相同首帧和提示词分别执行优化路径与 PyTorch 参考路径，再比较两份输出。完整构建日志在 `outputs/build.log`，视频、生成日志和比较结果也保存在 `outputs`。需要分步运行时，按 `fetch`、`build`、`generate`、`reference`、`compare` 的顺序调用入口。
 
-## 源码版本
+## 组件与版本
 
 | 组件 | Public 仓库 | Branch | Commit |
 | --- | --- | --- | --- |
@@ -32,17 +32,17 @@ bash run_dcu8_workflow.sh reproduce
 
 集成仓库的 implementation 目录完整收录四个主组件源码，文件校验值位于 vendored-sources.json。InfiniCore 的 submodules 目录完整收录 InfiniRT、InfiniOps、InfiniCCL；tools/h3_dense_attention/prepared 收录 H3Attention 的 FlashAttention、CUTLASS 和内核入口。各嵌入目录与对应独立仓库使用相同文件内容。InfiniLM 的 spdlog、JSON 等上游依赖保留在源码树中。
 
-## 计算路径
+## 执行过程
 
-InfiniCore 负责 BW1000 GEMM 形状调度、直接写入的 QKV 数据布局、RMS 和残差融合，以及 gfx936 BF16 注意力。InfiniLM 提供八卡序列并行、Qwen 条件编码、VAE 分块解码和统一生成入口。NineToothed 提供 Triton 算子生成、海光平台适配与 AOT 构建。Diffusers 提供 MiniMax-H3 模型、调度器和参考流水线。
+执行从 Qwen 条件编码和首帧编码开始，经八卡序列并行完成 DiT 去噪，再由 VAE 解码并输出媒体文件。InfiniLM 组织这些阶段，InfiniCore 执行 GEMM、归一化、RoPE、打包与注意力，NineToothed 生成融合算子及 HIP AOT 产物。Diffusers 中的 MiniMax-H3 模型、调度器和流水线用于参考生成。
 
-## 实测结果
+## 样例输出
 
 默认首帧为 assets/first_frame.png，提示词 A dog falls asleep；768×768、124 帧、seed 42、steps 50。官方比较结果：尺寸与长度 PASS，平均 SSIM 98.996%。
 
 | 计时项 | PyTorch 参考 | 优化实现 |
 | --- | ---: | ---: |
-| 入口总耗时，含加载与预热 | 639.842 s | 577.959 s |
+| 模型生成进程总耗时 | 639.842 s | 577.959 s |
 | 生成流水线 | 441.477 s | 110.697 s |
 | 49 次 DiT 前向合计 | 406.550 s | 79.554 s |
 
