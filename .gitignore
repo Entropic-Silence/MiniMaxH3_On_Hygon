@@ -2,3 +2,12 @@ runtime/
 outputs/
 __pycache__/
 *.pyc
+implementation/InfiniCore/
+implementation/InfiniLM/
+implementation/ninetoothed/
+implementation/third_party/diffusers/
+implementation/build/
+implementation/logs/
+implementation/.infini/
+implementation/.local/
+implementation/third_party/wheels/

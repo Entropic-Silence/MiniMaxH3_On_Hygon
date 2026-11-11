@@ -1,0 +1,3 @@
+{"id": "cat", "first_frame": "samples/eval/chelsea.png", "text": "A tabby cat slowly turns its head and blinks at the camera.", "seed": 7, "num_frames": 124, "height": 768, "width": 768}
+{"id": "coffee", "first_frame": "samples/eval/coffee.png", "text": "Steam slowly rises from a cup of coffee on a wooden table.", "seed": 123, "num_frames": 124, "height": 768, "width": 768}
+{"id": "rocket", "first_frame": "samples/eval/rocket.png", "text": "A rocket lifts off from the launch pad with bright flames and smoke.", "seed": 2026, "num_frames": 124, "height": 768, "width": 768}

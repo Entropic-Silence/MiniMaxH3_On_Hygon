@@ -1,37 +1,49 @@
-# MiniMax H3 海光八卡复现指南
+# MiniMax H3 海光八卡推理
 
-这份指南把 MiniMax-H3 的海光八卡运行流程收拢为四个动作：构建、生成、生成参考视频和比较结果。模型权重由使用者自行准备，代码包与输入图像均提供校验值，便于复查环境差异。
+通过固定版本源码完成 MiniMax-H3 八卡构建、视频生成及参考结果比较。运行入口自动准备工作目录并保存各阶段日志。
 
-## 开始之前
+## 运行环境
 
-请先确认机器具备 8 张 BW1000，架构为 gfx936。当前验证使用 Linux、Python 3.11.9、PyTorch 2.9.0+das.opt1.dtk2604、DTK 26.04、DCC 25.10 和 Triton 3.5.1。FlashAttention、HIP/BLAS/CCL 与 Python 依赖必须和这套海光环境匹配；普通 CUDA wheel 不能直接替换 DAS 组件。迁移到其他架构时需要重新构建和检查数值结果。
+Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，以及配套的海光 FlashAttention、HIP BLAS 和 CCL。基础镜像需提供这些硬件组件、Git、C/C++ 编译工具和 Python venv。首次构建需要访问 GitHub 和 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
 
-## 从源码到视频
+## 完整运行
 
 ```bash
 git clone --branch dcu8-reproducible https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
 cd MiniMaxH3_On_Hygon
 export H3_MODEL=/path/to/MiniMax-H3
-bash run_dcu8_workflow.sh build
-bash run_dcu8_workflow.sh generate
-bash run_dcu8_workflow.sh reference
-bash run_dcu8_workflow.sh compare
+bash run_dcu8_workflow.sh reproduce
 ```
 
-四个动作依次完成本地构建、优化版生成、PyTorch 参考生成和视频比较。模型目录由 H3_MODEL 指定，仓库不包含权重。构建使用包内的离线依赖，但仍以已有匹配的 Torch、FlashAttention 和 DTK 为前提。新内核已接入 build_all.sh；现有构建证据来自 Core 桥接层和注意力库的分阶段重建，尚未覆盖全新操作系统上的完整安装流程。
+入口依次获取 repositories.lock.json 中的固定源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。构建过程保存在 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
 
-首次运行可以直接使用随仓库提供的 assets/first_frame.png 和提示词 A dog falls asleep。默认输出为 768×768、124 帧，随机种子为 42，steps 为 50，对应 49 次主去噪前向。更换输入时设置 H3_IMAGE 和 H3_TEXT；更换结果目录时设置 H3_OUTPUT。默认结果写入 outputs，该目录与临时环境均不纳入版本管理。
+## 源码版本
 
-## 怎样理解测试数据
+| 组件 | Public 仓库 | Branch | Commit |
+| --- | --- | --- | --- |
+| InfiniRT | https://github.com/Entropic-Silence/InfiniRT_Hygon | bw1000 | `3234df032a2628238a8150194540d79a30563ef5` |
+| InfiniOps | https://github.com/Entropic-Silence/InfiniOps_Hygon | bw1000 | `0c259c45d3d6fab9fdb6420a81b2feee91dcca59` |
+| InfiniCCL | https://github.com/Entropic-Silence/InfiniCCL_Hygon | bw1000 | `e6a2062e20f1b01e003757daa7aa15ecf7831323` |
+| H3Attention | https://github.com/Entropic-Silence/H3Attention_Hygon | bw1000 | `4c6c744f8ac2dd8491507ba2cb241a9b98647581` |
+| InfiniCore | https://github.com/Entropic-Silence/InfiniCore_Hygon | bw1000 | `a94aff62a970a3184b1043f11cdf92123c67c6b7` |
+| InfiniLM | https://github.com/Entropic-Silence/InfiniLM_Hygon | bw1000 | `39d318fda7b5ae395f24edf0107c24f385d153c8` |
+| NineToothed | https://github.com/Entropic-Silence/NineToothed_Hygon | bw1000 | `92b0ccff07336a7417d631b55342bd80d9b65aa4` |
+| Diffusers | https://github.com/Entropic-Silence/Diffusers_Hygon | bw1000 | `77df80c3cd62c413a34b9e2fd1089b3b91dd2610` |
 
-局部性能采用固定输入 ABBA 对照测量：同一八卡实例上，DiT 前向中位耗时从 0.987319 秒变为 0.965104 秒，减少 2.250065%。注意力算子的已测形状覆盖八个设备，中位降幅为 4.080995%。对照对象是上一版已优化实现，因此这组数字描述新增改动的收益，不能直接用于推算完整视频生成速度。
+InfiniCore 的 submodules 目录完整收录 InfiniRT、InfiniOps、InfiniCCL；tools/h3_dense_attention/prepared 收录 H3Attention 的 FlashAttention、CUTLASS 和内核入口。各嵌入目录与对应独立仓库使用相同文件内容。InfiniLM 的 spdlog、JSON 等上游依赖保留在源码树中。
 
-新内核保留稠密 BF16 计算，省去注意力累加器乘以精确 1 的操作，同时维持 softmax 分母的 FP32 融合乘加与逐行加法顺序。没有稀疏化、量化、跳步或跨步输出缓存。旧 astronaut 与 cat 用例的四次完整生成、196 对逐步视频/音频结果均与优化前基线一致；这些历史相似度不能作为本仓库小狗图像的成绩。仓库内小狗原图已完成八卡验证：124 帧、768×768、seed 42、steps 50。官方比较脚本给出的平均 SSIM 为 98.996%；优化版生成流水线耗时 110.697 秒，PyTorch 参考版为 441.477 秒。该计时排除模型构建、预热和最终媒体编码，单次运行会受节点状态影响。包含加载、预热等开销的入口总耗时分别为优化版 577.959 秒、参考版 639.842 秒。原始视频、组件计时和比较结果保存在 validation 目录。
+## 计算路径
 
-## 复查源码与回退
+InfiniCore 负责 BW1000 GEMM 形状调度、直接写入的 QKV 数据布局、RMS 和残差融合，以及 gfx936 BF16 注意力。InfiniLM 提供八卡序列并行、Qwen 条件编码、VAE 分块解码和统一生成入口。NineToothed 提供 Triton 算子生成、海光平台适配与 AOT 构建。Diffusers 提供 MiniMax-H3 模型、调度器和参考流水线。
 
-完整计算实现位于 source/minimax_dcu8_bundle.tar.gz，包含 InfiniCore、InfiniLM、NineToothed 和构建材料。两个环境分别重建的新注意力库与实际测试二进制逐字节一致。排查兼容性时，可设置 H3_DENSE_TILE_ENABLE=0 切回原注意力路径，再对同一输入进行比较。
+## 实测结果
 
-源码包 SHA256：`cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512`。
+默认首帧为 assets/first_frame.png，提示词 A dog falls asleep；768×768、124 帧、seed 42、steps 50。官方比较结果：尺寸与长度 PASS，平均 SSIM 98.996%。
 
-本分支与 hygon-bw1000 共享同一套经过验证的计算实现，区别是说明组织与发布入口命名。包内上游代码沿用原许可证和版权声明，模型权重按其原有许可单独获取。本项目不承诺任意硬件上的相同性能或已达到理论峰值。
+| 计时项 | PyTorch 参考 | 优化实现 |
+| --- | ---: | ---: |
+| 入口总耗时，含加载与预热 | 639.842 s | 577.959 s |
+| 生成流水线 | 441.477 s | 110.697 s |
+| 49 次 DiT 前向合计 | 406.550 s | 79.554 s |
+
+计时来自 2026-11-09 每种实现各一次完整生成。生成流水线覆盖条件编码、去噪和 VAE 解码。视频、日志和比较结果位于 validation。H3_IMAGE、H3_TEXT、H3_OUTPUT 可设置首帧、提示词和输出目录。模型权重遵循原有许可；各组件保留上游许可证。

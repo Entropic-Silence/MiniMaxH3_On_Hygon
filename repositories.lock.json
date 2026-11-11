@@ -1,0 +1,58 @@
+{
+  "InfiniRT": {
+    "url": "https://github.com/Entropic-Silence/InfiniRT_Hygon",
+    "branch": "bw1000",
+    "commit": "3234df032a2628238a8150194540d79a30563ef5",
+    "path": "InfiniCore/submodules/InfiniRT",
+    "files": 56
+  },
+  "InfiniOps": {
+    "url": "https://github.com/Entropic-Silence/InfiniOps_Hygon",
+    "branch": "bw1000",
+    "commit": "0c259c45d3d6fab9fdb6420a81b2feee91dcca59",
+    "path": "InfiniCore/submodules/InfiniOps",
+    "files": 1217
+  },
+  "InfiniCCL": {
+    "url": "https://github.com/Entropic-Silence/InfiniCCL_Hygon",
+    "branch": "bw1000",
+    "commit": "e6a2062e20f1b01e003757daa7aa15ecf7831323",
+    "path": "InfiniCore/submodules/InfiniCCL",
+    "files": 94
+  },
+  "H3Attention": {
+    "url": "https://github.com/Entropic-Silence/H3Attention_Hygon",
+    "branch": "bw1000",
+    "commit": "4c6c744f8ac2dd8491507ba2cb241a9b98647581",
+    "path": "InfiniCore/tools/h3_dense_attention/prepared",
+    "files": 628
+  },
+  "InfiniCore": {
+    "url": "https://github.com/Entropic-Silence/InfiniCore_Hygon",
+    "branch": "bw1000",
+    "commit": "a94aff62a970a3184b1043f11cdf92123c67c6b7",
+    "path": "InfiniCore",
+    "files": 6072
+  },
+  "InfiniLM": {
+    "url": "https://github.com/Entropic-Silence/InfiniLM_Hygon",
+    "branch": "bw1000",
+    "commit": "39d318fda7b5ae395f24edf0107c24f385d153c8",
+    "path": "InfiniLM",
+    "files": 1746
+  },
+  "NineToothed": {
+    "url": "https://github.com/Entropic-Silence/NineToothed_Hygon",
+    "branch": "bw1000",
+    "commit": "92b0ccff07336a7417d631b55342bd80d9b65aa4",
+    "path": "ninetoothed",
+    "files": 79
+  },
+  "Diffusers": {
+    "url": "https://github.com/Entropic-Silence/Diffusers_Hygon",
+    "branch": "bw1000",
+    "commit": "77df80c3cd62c413a34b9e2fd1089b3b91dd2610",
+    "path": "third_party/diffusers",
+    "files": 2857
+  }
+}
