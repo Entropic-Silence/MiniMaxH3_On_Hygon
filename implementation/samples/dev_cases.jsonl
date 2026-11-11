@@ -1,0 +1,1 @@
+{"id": "astronaut_square", "first_frame": "samples/astronaut.png", "text": "An astronaut in an orange space suit smiles and slowly waves at the camera.", "steps": 50, "seed": 42, "num_frames": 124, "source": "https://github.com/scikit-image/scikit-image/blob/v0.24.0/skimage/data/astronaut.png", "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"}

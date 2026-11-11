@@ -1,0 +1,127 @@
+[
+  {
+    "file": "av-14.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 38805945,
+    "sha256": "512a8ceca26250f26fc28913d7a08f962f8e7704189c111e9688180f9b752458"
+  },
+  {
+    "file": "click-8.4.2-py3-none-any.whl",
+    "bytes": 119243,
+    "sha256": "e6f9f66136c816745b9d65817da91d61d957fb16e02e4dcd0552553c5a197b76"
+  },
+  {
+    "file": "diffusers-0.41.0.dev0-py3-none-any.whl",
+    "bytes": 6029441,
+    "sha256": "2155037991eba734261f2796dca7a2e9cd95bd362c51980304f01ddde0c2b169"
+  },
+  {
+    "file": "hatch_vcs-0.5.0-py3-none-any.whl",
+    "bytes": 8507,
+    "sha256": "b49677dbdc597460cc22d01b27ab3696f5e16a21ecf2700fb01bc28e1f2a04a7"
+  },
+  {
+    "file": "hatchling-1.27.0-py3-none-any.whl",
+    "bytes": 75794,
+    "sha256": "d3a2f3567c4f926ea39849cdf924c7e99e6686c9c8e288ae1037c8fa2a5d937b"
+  },
+  {
+    "file": "hf_xet-1.5.2-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+    "bytes": 4428006,
+    "sha256": "db78c39c83d6279daddc98e2238f373ab8980685556d42472b4ec51abcf03e8c"
+  },
+  {
+    "file": "huggingface_hub-1.32.0-py3-none-any.whl",
+    "bytes": 842906,
+    "sha256": "b0c7c80561969d9cdacdd55fce67ba9584cca0b9d4ea80957a3a5c1445fac5c8"
+  },
+  {
+    "file": "imageio-2.37.0-py3-none-any.whl",
+    "bytes": 315796,
+    "sha256": "11efa15b87bc7871b61590326b2d635439acc321cf7f8ce996f812543ce10eed"
+  },
+  {
+    "file": "imageio_ffmpeg-0.6.0-py3-none-manylinux2014_x86_64.whl",
+    "bytes": 29498237,
+    "sha256": "c7e46fcec401dd990405049d2e2f475e2b397779df2519b544b8aab515195282"
+  },
+  {
+    "file": "janus-2.0.0-py3-none-any.whl",
+    "bytes": 12161,
+    "sha256": "7e6449d34eab04cd016befbd7d8c0d8acaaaab67cb59e076a69149f9031745f9"
+  },
+  {
+    "file": "lazy_loader-0.4-py3-none-any.whl",
+    "bytes": 12097,
+    "sha256": "342aa8e14d543a154047afb4ba8ef17f5563baad3fc610d7b15b213b0f119efc"
+  },
+  {
+    "file": "mistral_common-1.10.0-py3-none-any.whl",
+    "bytes": 6525284,
+    "sha256": "c594d1a05202b61e8f0d867ec6064df4c5e5d492c2c2bdb6fd8fb4872c6afd8b"
+  },
+  {
+    "file": "ninetoothed-0.25.0-py3-none-any.whl",
+    "bytes": 51184,
+    "sha256": "b2a31e37dba445652fb39cc82569f2d79ecaf07d97bc39a78284a3ce8eb32650"
+  },
+  {
+    "file": "pathspec-0.12.1-py3-none-any.whl",
+    "bytes": 31191,
+    "sha256": "a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08"
+  },
+  {
+    "file": "peft-0.19.0-py3-none-any.whl",
+    "bytes": 680671,
+    "sha256": "7feca0f07bee9101807c7fd4601353d91161ea9e1f450150ee7859b2354c7690"
+  },
+  {
+    "file": "pybind11-2.13.6-py3-none-any.whl",
+    "bytes": 243282,
+    "sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5"
+  },
+  {
+    "file": "pywavelets-1.8.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 4487695,
+    "sha256": "880a0197e9fa108939af50a95e97c1bf9b7d3e148e0fad92ea60a9ed8c8947c0"
+  },
+  {
+    "file": "safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 516040,
+    "sha256": "fd6f3f93c9a0a7cc2788ee63fb763353d4bd2e89b0751bc78fcf7dda00bea774"
+  },
+  {
+    "file": "scikit_image-0.24.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "bytes": 14866533,
+    "sha256": "39ee0af13435c57351a3397eb379e72164ff85161923eec0c38849fecf1b4764"
+  },
+  {
+    "file": "soundfile-0.13.1-py2.py3-none-manylinux_2_28_x86_64.whl",
+    "bytes": 1313646,
+    "sha256": "03267c4e493315294834a0870f31dbb3b28a95561b80b134f0bd3cf2d5f0e618"
+  },
+  {
+    "file": "tifffile-2025.5.10-py3-none-any.whl",
+    "bytes": 226533,
+    "sha256": "e37147123c0542d67bc37ba5cdd67e12ea6fbe6e86c52bee037a9eb6a064e5ad"
+  },
+  {
+    "file": "tomli-2.2.1-py3-none-any.whl",
+    "bytes": 14257,
+    "sha256": "cb55c73c5f4408779d0cf3eef9f762b9c9f147a77de7b258bef0a5628adc85cc"
+  },
+  {
+    "file": "transformers-5.5.4-py3-none-any.whl",
+    "bytes": 10236696,
+    "sha256": "0bd6281b82966fe5a7a16f553ea517a9db1dee6284d7cb224dfd88fc0dd1c167"
+  },
+  {
+    "file": "trove_classifiers-2025.9.11.17-py3-none-any.whl",
+    "bytes": 14158,
+    "sha256": "5d392f2d244deb1866556457d6f3516792124a23d1c3a463a2e8668a5d1c15dd"
+  },
+  {
+    "file": "typer-0.20.0-py3-none-any.whl",
+    "bytes": 47028,
+    "sha256": "5b463df6793ec1dca6213a3cf4c0f03bc6e322ac5e16e13ddd622a889489784a"
+  }
+]

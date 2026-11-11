@@ -1,0 +1,12 @@
+[
+  {
+    "path": "InfiniLM/examples/minimax_h3.py",
+    "sha256": "ca54a18a73a7d760d644ca4eb2c3b20678f88dfdbcfa26a62dcd3de617b31af4",
+    "matches_upstream": true
+  },
+  {
+    "path": "InfiniLM/examples/minimax_h3_compare.py",
+    "sha256": "e143c28e4b3acb885662e0aa238aa00ca17cbcc82077f465f2ce57d0f1225590",
+    "matches_upstream": true
+  }
+]

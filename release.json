@@ -1,10 +1,12 @@
 {
   "source_sha256": "cfc760d64eeef6d3b47c16b1be36856a3ecd7e6448183dd7b3e8aa85d1457512",
-  "source_file": "source/h3_bw1000_source.tar.gz",
   "entry": "start_bw1000.sh",
   "input_sha256": "c053d4ac8eeb7cf2e96c775b6d073a4f51e5bc64af6a8946be664c876c277427",
   "tested_kernel_sha256": "f338324d85f9f9dc50f2982bcc7b9e24c0711ddd1b06dd00f60d208319ba6b3f",
   "branch": "hygon-bw1000",
   "image_validation": "complete",
-  "validation_file": "validation/bw1000-puppy.json"
+  "validation_file": "validation/bw1000-puppy.json",
+  "repositories_lock": "repositories.lock.json",
+  "source_sha256_scope": "Historical tested source snapshot",
+  "workflow": "reproduce"
 }
