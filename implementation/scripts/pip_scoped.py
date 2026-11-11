@@ -1,4 +1,11 @@
 import os,sys,mimetypes
+from pathlib import Path
+compat = str(Path(__file__).resolve().parent / "pip_compat")
+os.environ["H3_PIP_FILE_RENAME_FALLBACK"] = "1"
+os.environ["PYTHONPATH"] = compat + os.pathsep + os.environ.get("PYTHONPATH", "")
+sys.path.insert(0, compat)
+import runpy
+runpy.run_path(str(Path(compat) / "sitecustomize.py"))
 os.environ.setdefault("PIP_CONFIG_FILE",os.devnull)
 mimetypes.knownfiles=[]
 mimetypes.init()
