@@ -61,5 +61,11 @@
         "bytes": 54918767
       }
     ]
+  },
+  {
+    "file": "torchvision-0.24.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+    "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/torchvision-0.24.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+    "sha256": "51fe8d72ddcc88a50ff27c50dd4987d82fba8b0dfd591898ee1f60e2902d18d1",
+    "bytes": 1907916
   }
 ]
