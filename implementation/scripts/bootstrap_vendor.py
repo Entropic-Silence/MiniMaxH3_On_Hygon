@@ -24,14 +24,19 @@ for item in json.loads((root/'configs/vendor-packages.json').read_text()):
    for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
   return h.hexdigest()
  if not target.exists() or digest(target)!=item['sha256']:
-  print('DAS_DEPENDENCY_DOWNLOAD',name,version,flush=True)
-  with target.open('wb') as out:
-   for part in item.get('parts',[{'url':item.get('url')}]):
-    h=hashlib.sha256();count=0
-    with urllib.request.urlopen(part['url'],timeout=120) as response:
-     while b:=response.read(1024*1024):out.write(b);h.update(b);count+=len(b)
-    if 'sha256' in part:assert h.hexdigest()==part['sha256'] and count==part['bytes']
-    print('DAS_DEPENDENCY_TRANSFER',name,count,flush=True)
+  print('DAS_DEPENDENCY_ASSEMBLE',name,version,flush=True)
+  temporary=target.with_suffix(target.suffix+'.assembling')
+  with temporary.open('wb') as out:
+   for part in item['local_parts']:
+    source=root/'third_party/vendor-wheels'/part['file']
+    assert source.is_file(),f'Missing bundled dependency: {source}'
+    assert source.stat().st_size==part['bytes'] and digest(source)==part['sha256'],source
+    with source.open('rb') as response:
+     while b:=response.read(1024*1024):out.write(b)
+  assert digest(temporary)==item['sha256'],temporary
+  # Use copy instead of rename on virtual filesystems that reject rename with EXDEV.
+  import shutil
+  shutil.copyfile(temporary,target);temporary.unlink()
  assert digest(target)==item['sha256'],target
  subprocess.run([sys.executable,str(root/'scripts/pip_scoped.py'),'install','--no-deps',str(target)],check=True)
  assert importlib.metadata.version(name)==version

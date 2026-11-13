@@ -3,7 +3,19 @@
     "file": "triton-3.5.1+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
     "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/triton-3.5.1%2Bdas.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
     "sha256": "e397b16365da22508353ce44a45f5be82f8ee58e49853a3df06aa8f6f83d5581",
-    "bytes": 105484167
+    "bytes": 105484167,
+    "local_parts": [
+      {
+        "file": "triton-3.5.1+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part00",
+        "bytes": 67108864,
+        "sha256": "a67b501745b57b6e169277e31cfbfb51c93426dcd147e1450bdf4e9d581b7154"
+      },
+      {
+        "file": "triton-3.5.1+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part01",
+        "bytes": 38375303,
+        "sha256": "78d2df998f6aa66ba97b19b57f25d3b7857b813d1b2fc009d800c42a7a668c43"
+      }
+    ]
   },
   {
     "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl",
@@ -60,12 +72,71 @@
         "sha256": "a1923fd465bd0b28dc8dddad24e42c3a824b8035ab98d7aa6f80065123dee7bc",
         "bytes": 54918767
       }
+    ],
+    "local_parts": [
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part00",
+        "bytes": 67108864,
+        "sha256": "052d13e576b7930775cbdacd33ea6fec1fcd9f1d3c32bd399f020b337a6c7565"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part01",
+        "bytes": 67108864,
+        "sha256": "d91b26e4be48976e06a1b26762830c6fc3296bdc736210886de25c579b2766f5"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part02",
+        "bytes": 67108864,
+        "sha256": "1e3f31d755949e5cf22a7f6f22ca67c22b51779b61b8ed4df546091d1c997766"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part03",
+        "bytes": 67108864,
+        "sha256": "6d9cd0aae204e1b7ce903ca2e245327819f08bf2ea4f0b26424b71b0489fa76e"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part04",
+        "bytes": 67108864,
+        "sha256": "e9087fc0331bfd127126fee8fc71b2d235d53d9efdf48259dd5d57730f9b2067"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part05",
+        "bytes": 67108864,
+        "sha256": "cb3eb2750f67a029d70cc6536c7a5589e79d1cff0c2d98bed0f2ae8ef726c3cb"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part06",
+        "bytes": 67108864,
+        "sha256": "5c80a9a614f7e603737090c0c775731fbdc14cb5a8bb075b113ad0632519ec46"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part07",
+        "bytes": 67108864,
+        "sha256": "9926d4eec8f650232af16c2619e8772e6b6be2b69848702841a03784858b63d6"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part08",
+        "bytes": 67108864,
+        "sha256": "933bacb86ed5eddecc9e83bbb4ce1d1bd80a3230debb00dded7b2fb69f81074c"
+      },
+      {
+        "file": "flash_attn-2.8.3+das.opt1.dtk2604.torch290-cp311-cp311-manylinux_2_28_x86_64.whl.part09",
+        "bytes": 54918767,
+        "sha256": "a1923fd465bd0b28dc8dddad24e42c3a824b8035ab98d7aa6f80065123dee7bc"
+      }
     ]
   },
   {
     "file": "torchvision-0.24.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
     "url": "https://developer.sourcefind.cn/codes/api/v4/projects/16285/packages/generic/h3-runtime/20261111/torchvision-0.24.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl",
     "sha256": "51fe8d72ddcc88a50ff27c50dd4987d82fba8b0dfd591898ee1f60e2902d18d1",
-    "bytes": 1907916
+    "bytes": 1907916,
+    "local_parts": [
+      {
+        "file": "torchvision-0.24.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl.part00",
+        "bytes": 1907916,
+        "sha256": "51fe8d72ddcc88a50ff27c50dd4987d82fba8b0dfd591898ee1f60e2902d18d1"
+      }
+    ]
   }
 ]

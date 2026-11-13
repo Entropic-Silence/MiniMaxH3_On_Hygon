@@ -24,13 +24,13 @@ HYGON_ARCH=$($H3_PYTHON -c 'from ninetoothed.platform import current_target; pri
 export HYGON_ARCH
 mkdir -p "$H3_ROOT/build" "$H3_ROOT/logs/build"
 mkdir -p "$H3_ROOT/third_party/wheels"
-"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" download --no-deps -r "$H3_ROOT/configs/bootstrap-requirements.txt" -d "$H3_ROOT/third_party/wheels"
-"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-deps --no-index --find-links "$H3_ROOT/third_party/wheels" -r "$H3_ROOT/configs/bootstrap-requirements.txt"
-"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-deps --no-build-isolation -e "$H3_ROOT/third_party/diffusers"
+"$H3_PYTHON" "$H3_ROOT/scripts/verify_python_wheels.py"
+"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-deps --no-index --find-links "$H3_ROOT/third_party/python-wheels" -r "$H3_ROOT/configs/bootstrap-requirements.txt"
+"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-deps --no-build-isolation --no-index -e "$H3_ROOT/third_party/diffusers"
 
 "$H3_PYTHON" "$H3_ROOT/tools/detect_hw.py" --output "$H3_ROOT/logs/build/hardware.json"
 # Never resolve or upgrade accelerator packages. Install only from the supplied wheels.
-"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-index --no-deps --find-links "$H3_ROOT/third_party/wheels" \
+"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-index --no-deps --find-links "$H3_ROOT/third_party/python-wheels" \
   'hatchling==1.27.0' 'pathspec==0.12.1' 'trove-classifiers==2025.9.11.17' 'pybind11==2.13.6'
 "$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" wheel --no-deps --no-build-isolation --no-index \
   "$H3_ROOT/ninetoothed" -w "$H3_ROOT/third_party/wheels"
@@ -50,7 +50,7 @@ if [[ "$HYGON_ARCH" == gfx936 ]]; then
 fi
 if ((H3_KERNELS_ONLY)); then exit 0; fi
 
-"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-index --no-deps --find-links "$H3_ROOT/third_party/wheels" \
+"$H3_PYTHON" "$H3_ROOT/scripts/pip_scoped.py" install --no-index --no-deps --find-links "$H3_ROOT/third_party/python-wheels" \
   'scikit-image==0.24.0' 'av==14.2.0' 'imageio==2.37.0' 'imageio-ffmpeg==0.6.0' \
   'soundfile==0.13.1' 'lazy-loader==0.4' 'tifffile==2025.5.10' 'pywavelets==1.8.0' 'janus==2.0.0'
 # Use the approved isolated runtime; never resolve protected accelerator packages here.

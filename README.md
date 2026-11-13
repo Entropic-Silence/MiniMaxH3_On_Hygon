@@ -4,7 +4,7 @@ MiniMax-H3 的海光 BW1000 八卡实现，包含序列并行、矩阵乘法调�
 
 ## 运行环境
 
-Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，HIP BLAS 和 CCL 由 DTK 提供。基础镜像需提供匹配的 PyTorch、DTK、Git、C/C++ 编译工具和 Python venv。入口根据公开依赖记录自动安装海光 Triton 3.5.1 与 FlashAttention 2.8.3，安装前校验 SHA256。获取集成仓库后，首次构建需要访问 Python 包索引；PIP_INDEX_URL 可指定镜像站。模型权重目录通过 H3_MODEL 设置。
+Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9，PyTorch 2.9.0+das.opt1.dtk2604，Triton 3.5.1，HIP BLAS 和 CCL 由 DTK 提供。基础镜像需提供匹配的 PyTorch、DTK、Git、C/C++ 编译工具和 Python venv。仓库随附 44 个固定版本 Python wheel，以及海光 Triton 3.5.1、FlashAttention 2.8.3 和 Torchvision 0.24.0 CPU 的安装文件。安装前校验 SHA256，较大 wheel 由仓库内分片自动组装；依赖安装从本地文件完成。模型权重目录通过 H3_MODEL 设置。
 
 ## 完整运行
 
@@ -16,6 +16,10 @@ bash start_bw1000.sh reproduce
 ```
 
 入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。完整构建日志为 outputs/build.log，细分构建记录位于 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+
+## 本地依赖文件
+
+`implementation/third_party/python-wheels` 保存 Python 安装包，版本和校验值见 `implementation/configs/python-wheels.json`。`implementation/third_party/vendor-wheels` 保存加速器相关 wheel 分片，入口自动组装、校验并安装。各 wheel 内保留其上游许可证。基础环境提供海光驱动、DTK、匹配的 PyTorch 与系统编译工具，模型通过 `H3_MODEL` 指定。
 
 ## 源码版本
 
