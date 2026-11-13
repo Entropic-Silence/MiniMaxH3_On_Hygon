@@ -11,11 +11,17 @@ Linux x86_64，8 张 BW1000（gfx936），DTK 26.04 / DCC 25.10，Python 3.11.9�
 ```bash
 GIT_CONFIG_NOSYSTEM=1 git -c checkout.workers=1 clone --branch hygon-bw1000 https://github.com/Entropic-Silence/MiniMaxH3_On_Hygon.git
 cd MiniMaxH3_On_Hygon
-export H3_MODEL=/path/to/MiniMax-H3
+export H3_MODEL=/path/to/MiniMax-H3/diffusers
 bash start_bw1000.sh reproduce
 ```
 
-入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。完整构建日志为 outputs/build.log，细分构建记录位于 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+入口依次校验 repositories.lock.json 和 vendored-sources.json 对应的完整源码、创建继承硬件环境的 Python 虚拟环境、准备依赖、构建内核与绑定、生成优化版与 PyTorch 参考视频，最后调用官方比较脚本。完整构建日志为 outputs/pod-576x384/build.log，细分构建记录位于 implementation/logs/build，视频与生成日志位于 outputs。各阶段可单独调用 fetch、build、generate、reference、compare。
+
+## POD 验证配置
+
+默认生成参数为宽 576、高 384、124 帧、24 FPS、steps 10、seed 42，提示词为 `A dog falls asleep`。参考路径将条件编码器放在 0–3 号卡、Transformer 放在 4–7 号卡，优化路径使用单节点八卡。输出默认保存在 `outputs/pod-576x384`。`H3_STEPS` 可指定去噪步数；2 步用于冒烟检查。
+
+每次生成后，`verify_pod_video.py` 解码检查宽高、帧数、帧率、时间戳、约 5.17 秒视频时长及有效音轨。官方 SSIM 比较前，两份输出都须通过该检查。配置见 `configs/pod-validation.json`。576×384 配置的 GPU 生成和 SSIM 验证正在补测。
 
 ## 本地依赖文件
 
@@ -40,9 +46,9 @@ bash start_bw1000.sh reproduce
 
 InfiniCore 负责 BW1000 GEMM 形状调度、直接写入的 QKV 数据布局、RMS 和残差融合，以及 gfx936 BF16 注意力。InfiniLM 提供八卡序列并行、Qwen 条件编码、VAE 分块解码和统一生成入口。NineToothed 提供 Triton 算子生成、海光平台适配与 AOT 构建。Diffusers 提供 MiniMax-H3 模型、调度器和参考流水线。
 
-## 实测结果
+## 768×768 历史实测结果
 
-默认首帧为 assets/first_frame.png，提示词 A dog falls asleep；768×768、124 帧、seed 42、steps 50。官方比较结果：尺寸与长度 PASS，平均 SSIM 98.996%。
+2026-11-09 的历史测试使用 assets/first_frame.png，提示词 A dog falls asleep；768×768、124 帧、seed 42、steps 50。官方比较结果：尺寸与长度 PASS，平均 SSIM 98.996%。
 
 | 计时项 | PyTorch 参考 | 优化实现 |
 | --- | ---: | ---: |

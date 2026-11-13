@@ -1,0 +1,15 @@
+{
+  "task": "fl2va",
+  "prompt": "A dog falls asleep",
+  "width": 576,
+  "height": 384,
+  "frames": 124,
+  "fps": 24,
+  "duration_seconds": 5.166666666666667,
+  "audio_required": true,
+  "steps": 10,
+  "seed": 42,
+  "gpus": [0, 1, 2, 3, 4, 5, 6, 7],
+  "reference_text_gpus": [0, 1, 2, 3],
+  "reference_transformer_gpus": [4, 5, 6, 7]
+}

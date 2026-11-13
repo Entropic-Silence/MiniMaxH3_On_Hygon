@@ -24,7 +24,8 @@ export INFINI_ROOT=${INFINI_ROOT:-"$ROOT/.infini"}
 export LD_LIBRARY_PATH="$INFINI_ROOT/lib:${LD_LIBRARY_PATH:-}"
 export PYTHONPATH="$ROOT/InfiniLM/python:$ROOT/InfiniCore/python:$ROOT/third_party/diffusers/src:$ROOT/ninetoothed/src:$ROOT/tools:${PYTHONPATH:-}"
 export PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
-OUT=${H3_OUTPUT:-"$BASE/outputs"}; mkdir -p "$OUT"
+OUT=${H3_OUTPUT:-"$BASE/outputs/pod-576x384"}; mkdir -p "$OUT"
+OUT=$(cd -- "$OUT" && pwd)
 if [[ "$ACTION" == reproduce ]]; then
   bash "$ROOT/scripts/build_all.sh" 2>&1 | tee "$OUT/build.log"
   bash "$BASE/start_bw1000.sh" generate
@@ -37,11 +38,14 @@ if [[ "$ACTION" == build ]]; then
 fi
 : "${H3_MODEL:?Set H3_MODEL to the local MiniMax-H3 model directory}"
 if [[ "$ACTION" == compare ]]; then
+  "$PYTHON" "$BASE/verify_pod_video.py" "$OUT/optimized.mp4" --output "$OUT/optimized-media.json"
+  "$PYTHON" "$BASE/verify_pod_video.py" "$OUT/reference.mp4" --output "$OUT/reference-media.json"
   python3 "$ROOT/InfiniLM/examples/minimax_h3_compare.py" --tasks fl2va     --model-path "$H3_MODEL" --reference-fl2va-video "$OUT/reference.mp4"     --infinilm-fl2va-video "$OUT/optimized.mp4" --output-dir "$OUT/comparison" "$@" 2>&1 | tee "$OUT/comparison.log"
   exit
 fi
 EXTRA=(); NAME=optimized
-if [[ "$ACTION" == reference ]]; then EXTRA=(--legacy --legacy-memory-fraction 0.4); NAME=reference
+if [[ "$ACTION" == reference ]]; then EXTRA=(--legacy --legacy-text-gpus 0,1,2,3 --legacy-transformer-gpus 4,5,6,7); NAME=reference
 elif [[ "$ACTION" != generate ]]; then echo 'Use build, generate, reference, or compare' >&2; exit 2; fi
 cd "$ROOT"
-python3 -u InfiniLM/examples/minimax_h3.py fl2va --model-path "$H3_MODEL"   --text "${H3_TEXT:-A dog falls asleep}" --first-frame "${H3_IMAGE:-$BASE/assets/first_frame.png}"   --gpus 0,1,2,3,4,5,6,7 --steps 50 --seed 42 --num-frames 124 --height 768 --width 768   --output "$OUT/$NAME.mp4" "${EXTRA[@]}" "$@" 2>&1 | tee "$OUT/$NAME.log"
+"$PYTHON" -u InfiniLM/examples/minimax_h3.py fl2va --model-path "$H3_MODEL"   --text "${H3_TEXT:-A dog falls asleep}" --first-frame "${H3_IMAGE:-$BASE/assets/first_frame.png}"   --gpus 0,1,2,3,4,5,6,7 --steps "${H3_STEPS:-10}" --seed 42 --num-frames 124 --height 384 --width 576   --output "$OUT/$NAME.mp4" "${EXTRA[@]}" "$@" 2>&1 | tee "$OUT/$NAME.log"
+"$PYTHON" "$BASE/verify_pod_video.py" "$OUT/$NAME.mp4" --output "$OUT/$NAME-media.json"
